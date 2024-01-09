@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
+        
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
@@ -19,6 +19,9 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           echo "Host 192.116.98.97\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n\tIdentityFile ~/.ssh/deploy_key" > ~/.ssh/config
 
+      - name: Test SSH Connection
+        run: ssh -i ~/.ssh/deploy_key idobk@192.116.98.97 "echo SSH connection successful"
+        
       - name: Deploy to server
         run: |
           rsync -avz --delete ./ idobk@192.116.98.97:/var/www/w88/
