@@ -17,7 +17,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          echo "Host 192.116.98.97\n\tStrictHostKeyChecking no\n\tIdentityFile ~/.ssh/deploy_key" > ~/.ssh/config
+          echo "Host 192.116.98.97\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n\tIdentityFile ~/.ssh/deploy_key" > ~/.ssh/config
 
       - name: Deploy to server
         run: |
