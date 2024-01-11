@@ -20,15 +20,33 @@
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="match_parent"
+            android:layout_width="149dp"
             android:layout_height="wrap_content"
+            android:rotationX="-4"
             android:text="Button 1" />
 
-        <Button
-            android:id="@+id/button2"
+        <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button 2" />
+            android:text="CheckBox" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip4"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="273dp"
+            android:layout_height="192dp">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                tools:srcCompat="@tools:sample/avatars" />
+        </com.google.android.material.chip.ChipGroup>
 
     </LinearLayout>
 
@@ -39,5 +57,13 @@
         android:text="Button 3"
         app:layout_anchor="@+id/linearLayout"
         app:layout_anchorGravity="center" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button 2"
+        app:layout_anchor="@+id/linearLayout"
+        app:layout_anchorGravity="bottom|center" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
