@@ -1,7 +1,8 @@
-from flask import Flask, render_template, url_for,  flash, redirect
+from flask import Flask, render_template, url_for,  flash, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForms
 from datetime import datetime
+
 
 #Create our TakeCare App
 app = Flask(__name__)
@@ -41,6 +42,11 @@ class Post(db.Model):
 @app.route("/home")
 def home():
     return render_template("home.html")
+
+@app.route("/api")
+def api():
+    data = request.json
+    return [data,data]
 
 
 @app.route("/about")
