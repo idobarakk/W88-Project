@@ -16,7 +16,7 @@ connect to server:
 transfer files:
 1. download Putty
 2. enter
-2.1 host - 192.168.98.97
+2.1 host - 192.116.98.97
 2.2 port 22
 3. user name : idobk
 4. password : guc&n9N7do
@@ -41,3 +41,11 @@ ___________________________________
 if __name__ =='__main__':
     app.run(host='192.116.98.97',port=5000)
 ____________________________________
+
+
+create db
+
+from app import app, db
+
+with app.app_context():
+    db.create_all()
