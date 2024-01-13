@@ -46,6 +46,8 @@ def home():
 @app.route("/api")
 def api():
     data = request.json
+    if not data:
+        return "no data sent"
     return [data,data]
 
 
