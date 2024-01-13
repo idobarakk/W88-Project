@@ -43,6 +43,12 @@ class Post(db.Model):
 def home():
     return render_template("home.html")
 
+
+@app.route("/drugs")
+def drugs():
+    return render_template("drugs.html")
+
+
 @app.route("/api")
 def api():
     data = request.json
