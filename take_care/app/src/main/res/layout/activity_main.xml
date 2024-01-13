@@ -5,20 +5,29 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/resultText"
+        android:id="@+id/welcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="18sp"
+        android:text="Welcome to My App"
+        android:textSize="24sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="100dp"/>
 
     <Button
         android:id="@+id/getButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Get"
-        android:layout_below="@id/resultText"
+        android:layout_below="@id/welcomeText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/resultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="18sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"/>
 </LinearLayout>
