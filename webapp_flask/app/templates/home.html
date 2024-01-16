@@ -1,16 +1,17 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Home Page</h1>
-    {% for post in posts %}
+  <h1>Home Page</h1>
+  <h4>Notifications:</h4>
+      {% for notification in notifications %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted }}</small>
+              <small class="text-muted">{{ notification.title }}</small>
+              <small class="text-muted">{{ notification.content }}</small>
+              <small class="text-muted">{{ notification.date }}</small>
+              <small class="text-muted">{{ notification.time }}</small>
             </div>
-            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-          </div>
+          </div>  
         </article>
-    {% endfor %}
+      {% endfor %}
 {% endblock content %}

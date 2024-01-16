@@ -2,9 +2,9 @@ import secrets
 import os
 from PIL import Image
 from flask import Flask, render_template, url_for,  flash, redirect, request
-from app.models import User, Post
+from app.models import User, Post, Notification
 from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm
+from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm, AddNotificationForm
 from flask_login import login_user, current_user ,logout_user,login_required
 
 
@@ -13,13 +13,29 @@ from flask_login import login_user, current_user ,logout_user,login_required
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("home.html")
+    if current_user.is_authenticated:
+        notifications = Notification.query.filter_by(user_id=current_user.id)
+        return render_template("home.html",notifications=notifications)
+    else:
+        return render_template("home.html")
 
 
 @app.route("/drugs")
 @login_required
 def drugs():
     return render_template("drugs.html")
+
+
+@app.route("/notification",methods=['GET','POST'])
+@login_required
+def notification():
+    form = AddNotificationForm()
+    if form.validate_on_submit():
+        notification = Notification(title=form.title.data,content=form.content.data,date=form.date.data,time=form.time.data,user_id=current_user.id)
+        db.session.add(notification)
+        db.session.commit()
+        flash('Your Notification has been added !','success')
+    return render_template("notification.html", title="Notification", form=form)
 
 
 @app.route("/api")
@@ -34,6 +50,7 @@ def api():
 @login_required
 def about():
     return render_template("about.html")
+
 
 @app.route("/register", methods=['GET','POST'])
 def register():

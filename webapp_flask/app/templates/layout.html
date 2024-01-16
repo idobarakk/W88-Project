@@ -28,7 +28,8 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{url_for('home')}}">Home</a>
               <a class="nav-item nav-link" href="{{url_for('about')}}">About</a>
-			  <a class="nav-item nav-link" href="{{url_for('drugs')}}">Drugs</a>
+			        <a class="nav-item nav-link" href="{{url_for('drugs')}}">Drugs</a>
+              <a class="nav-item nav-link" href="{{url_for('notification')}}">Notification</a>
             </div>
             <!-- Navbar Right Side -->
             {% if not current_user.is_authenticated %}
@@ -40,7 +41,7 @@
             <div class="navbar-nav">
               <a class="nav-item nav-link" href="{{url_for('account')}}">Account</a>
               <a class="nav-item nav-link" href="{{url_for('logout')}}">Logout</a>
-              <sapn class="navbar-text">{{current_user.email}}</span>
+              <sapn class="navbar-text">{{current_user.username}}</span>
             </div>
             {% endif %}
           </div>

@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField
 from flask_login import current_user
-from wtforms import StringField,PasswordField,SubmitField, BooleanField, IntegerField
+from wtforms import StringField,PasswordField,SubmitField, BooleanField, IntegerField, DateTimeField, DateField, TimeField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from app.models import User
+from datetime import datetime
 
 
 
@@ -54,3 +55,11 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('That email is taken. Choose a diffrent one.')
         else:
             raise ValidationError('That Username must be diffrent than your current one.')
+        
+        
+class AddNotificationForm(FlaskForm):
+    title = StringField('Title',validators=[DataRequired()])
+    content = StringField('Content',validators=[DataRequired()])
+    date = DateField('Date',validators=[DataRequired()])
+    time = TimeField('Time',validators=[DataRequired()])
+    submit = SubmitField('Add Notification')
