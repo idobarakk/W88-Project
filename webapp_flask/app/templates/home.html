@@ -1,17 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
   <h1>Home Page</h1>
+  <br>
   <h4>Notifications:</h4>
-      {% for notification in notifications %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <small class="text-muted">{{ notification.title }}</small>
-              <small class="text-muted">{{ notification.content }}</small>
-              <small class="text-muted">{{ notification.date }}</small>
-              <small class="text-muted">{{ notification.time }}</small>
-            </div>
-          </div>  
-        </article>
-      {% endfor %}
+  {% for notification in notifications %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <big class="text-muted">{{ notification.date.strftime('%Y-%m-%d') }}    {{ notification.time }} </big>
+        </div>
+        <h2>{{ notification.title }}</h2>
+        <p class="article-content">{{ notification.content }}</p>
+      </div>
+    </article>
+    {% endfor %}
+    <a class="ml-2 " href="{{url_for('notification')}}"> Full notification status</a>
 {% endblock content %}

@@ -27,10 +27,19 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{url_for('home')}}">Home</a>
-              <a class="nav-item nav-link" href="{{url_for('about')}}">About</a>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Notifications
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="{{url_for('notification')}}">Notifications Status</a>
+                  <a class="dropdown-item" href="{{url_for('add_notification')}}">Add Notification</a>
+                </div>
+              </li>
 			        <a class="nav-item nav-link" href="{{url_for('drugs')}}">Drugs</a>
-              <a class="nav-item nav-link" href="{{url_for('notification')}}">Notification</a>
             </div>
+
             <!-- Navbar Right Side -->
             {% if not current_user.is_authenticated %}
             <div class="navbar-nav">

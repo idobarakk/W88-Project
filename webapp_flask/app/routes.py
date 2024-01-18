@@ -1,7 +1,7 @@
 import secrets
 import os
 from PIL import Image
-from flask import Flask, render_template, url_for,  flash, redirect, request
+from flask import Flask, render_template, url_for,  flash, redirect, request,abort
 from app.models import User, Post, Notification
 from app import app, db, bcrypt
 from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm, AddNotificationForm
@@ -14,7 +14,7 @@ from flask_login import login_user, current_user ,logout_user,login_required
 @app.route("/home")
 def home():
     if current_user.is_authenticated:
-        notifications = Notification.query.filter_by(user_id=current_user.id)
+        notifications = Notification.query.filter_by(user_id=current_user.id).order_by(Notification.date.asc()).order_by(Notification.time.asc()).limit(3)
         return render_template("home.html",notifications=notifications)
     else:
         return render_template("home.html")
@@ -25,17 +25,63 @@ def home():
 def drugs():
     return render_template("drugs.html")
 
-
-@app.route("/notification",methods=['GET','POST'])
+@app.route("/edit_notification/<int:notification_id>",methods=['GET','POST'])
 @login_required
-def notification():
+def edit_notification(notification_id):
+    form = AddNotificationForm()
+    notification = Notification.query.get_or_404(notification_id)
+    if notification.user_id != current_user.id:
+        abort(403)
+    if form.validate_on_submit():
+        notification.title = form.title.data
+        notification.content = form.content.data
+        notification.date = form.date.data
+        notification.time = form.time.data
+        db.session.commit()
+        flash('Your Notification has been Updated !','success')
+        return redirect(url_for('notification'))
+
+    elif request.method == 'GET':
+        form.title.data = notification.title
+        form.content.data = notification.content  
+        form.date.data = notification.date 
+        form.time.data = notification.time
+    return render_template("edit_notification.html", title="edit Notification", notification=notification, form=form)
+
+
+@app.route("/notification/<int:notification_id>", methods=['GET','POST'])
+@login_required
+def delete_notification(notification_id):
+    notification = Notification.query.get_or_404(notification_id)
+    print(notification)
+    print(notification_id)
+    db.session.delete(notification)
+    db.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('home'))
+
+
+@app.route("/add_notification",methods=['GET','POST'])
+@login_required
+def add_notification():
     form = AddNotificationForm()
     if form.validate_on_submit():
         notification = Notification(title=form.title.data,content=form.content.data,date=form.date.data,time=form.time.data,user_id=current_user.id)
         db.session.add(notification)
         db.session.commit()
+        return redirect(url_for('notification'))
         flash('Your Notification has been added !','success')
-    return render_template("notification.html", title="Notification", form=form)
+    return render_template("add_notification.html", title="Add Notification", form=form)
+
+
+@app.route("/notification")
+@login_required
+def notification():
+    if current_user.is_authenticated:
+        notifications = Notification.query.filter_by(user_id=current_user.id).order_by(Notification.date.asc()).order_by(Notification.time.asc())
+        return render_template("notification.html",notifications=notifications, title="Notification")
+    else:
+        return render_template("home.html")
 
 
 @app.route("/api")
