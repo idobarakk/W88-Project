@@ -2,7 +2,7 @@ import secrets
 import os
 from PIL import Image
 from flask import Flask, render_template, url_for,  flash, redirect, request,abort
-from app.models import User, Post, Notification
+from app.models import User, Notification
 from app import app, db, bcrypt
 from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm, AddNotificationForm
 from flask_login import login_user, current_user ,logout_user,login_required
@@ -57,7 +57,7 @@ def delete_notification(notification_id):
     print(notification_id)
     db.session.delete(notification)
     db.session.commit()
-    flash('Your post has been deleted!', 'success')
+    flash('Your notification has been deleted!', 'success')
     return redirect(url_for('home'))
 
 
