@@ -49,7 +49,7 @@ def edit_notification(notification_id):
     return render_template("edit_notification.html", title="edit Notification", notification=notification, form=form)
 
 
-@app.route("/notification/<int:notification_id>", methods=['GET','POST'])
+@app.route("/delete_notification/<int:notification_id>", methods=['GET','POST'])
 @login_required
 def delete_notification(notification_id):
     notification = Notification.query.get_or_404(notification_id)

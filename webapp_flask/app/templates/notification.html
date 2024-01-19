@@ -5,21 +5,21 @@
       <article class="media content-section">
         <div class="media-body">
           <div class="article-metadata">
-            <big class="text-muted">{{ notification.date.strftime('%Y-%m-%d') }}    {{ notification.time }} </big>
+            <big class="text-muted">{{ notification.date.strftime('%Y-%m-%d') }}    {{ notification.time }} {{ notification.id }} </big>
           </div>
           <h2>{{ notification.title }}</h2>
           <p class="article-content">{{ notification.content }}</p>
           <a class="btn btn-secondary btn-sm ml-1" href="{{ url_for('edit_notification' ,notification_id=notification.id ) }}">Edit</a>
-          <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal">
+          <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal{{notification.id}}">
             delete
           </button>
         </div>  
           <!-- Modal -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteModal{{notification.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModal{{notification.id}}Label" aria-hidden="true">
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Are you sure?</h5>
+                <h5 class="modal-title" id="deleteModal{{notification.id}}Label">Are you sure?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -29,11 +29,9 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                {% print(notification_id)%}
-                {% print(notification.id)%}
                 <form action="{{ url_for('delete_notification', notification_id=notification.id ) }}" method="POST">
                     <input class="btn btn-primary btn-dangerr" type="submit" value="Delete">
-                  </form>
+                </form>
                 </div>
             </div>
             </div>
