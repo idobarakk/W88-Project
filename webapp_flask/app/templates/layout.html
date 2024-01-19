@@ -37,7 +37,16 @@
                   <a class="dropdown-item" href="{{url_for('add_notification')}}">Add Notification</a>
                 </div>
               </li>
-			        <a class="nav-item nav-link" href="{{url_for('drugs')}}">Drugs</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Drugs
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Drugs Status</a>
+                  <a class="dropdown-item" href="#">Add Drug</a>
+                </div>
+              </li>
+			        
             </div>
 
             <!-- Navbar Right Side -->
