@@ -1,9 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-  <h1>Home Page</h1>
+  <h2> TakeCare - <a href="{{ url_for('account') }}"> {{current_user.username}}</a>'s Panel </h2>
   <br>
   <h4>Notifications:</h4>
-  {% for notification in notifications %}
+  <div class="content-section">
+    {% for notification in notifications %}
     <article class="media content-section">
       <div class="media-body">
         <div class="article-metadata">
@@ -14,5 +15,26 @@
       </div>
     </article>
     {% endfor %}
-    <a class="btn btn-secondary btn-sm ml-1" href="{{url_for('notification')}}"> Full notification status</a>
+    <a class="btn btn-info btn-sm ml-1" href="{{url_for('notification')}}"> View All Notifications</a>
+    <a class="btn btn-primary btn-sm ml-1" href="{{url_for('add_notification')}}"> Add New Notification</a>
+  </div>
+
+  <h4>Drugs:</h4>
+  <div class="content-section">
+    {% for drug in drugs %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <big class="text-muted">{{ drug.startdate.strftime('%Y-%m-%d') }} </big>
+        </div>
+        <h2>{{ drug.name }}</h2>
+        <p class="article-content">{{ drug.type }}</p>>
+      </div> 
+    </article>
+    {% endfor %}
+    <a class="btn btn-info btn-sm ml-1" href="{{url_for('drugs')}}"> View All Drugs</a>
+    <a class="btn btn-primary btn-sm ml-1" href="{{url_for('add_drug')}}"> Add New Drug</a>
+  </div>
+
+
 {% endblock content %}

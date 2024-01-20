@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(100),nullable=False,default='default.jpg')
     password= db.Column(db.String(60),nullable=False)
     Notifications = db.relationship('Notification',backref='creator',lazy=True )
+    Drugs = db.relationship('Drug',backref='creator',lazy=True )
 
     def __repr__(self):
         return f"User('{self.username}','{self.email}','{self.image_file}')"
@@ -32,3 +33,16 @@ class Notification(db.Model):
     def __repr__(self):
         return f"Notification('{self.title}','{self.content}','{self.date}','{self.user_id}','{self.id}')"
 
+class Drug(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150),nullable=False)
+    type = db.Column(db.Text,nullable=False)
+    dose = db.Column(db.Integer,nullable=False)
+    timesaday = db.Column(db.Integer,nullable=False)
+    packsize = db.Column(db.Integer,nullable=False)
+    daystotake = db.Column(db.Integer,nullable=False)
+    startdate = db.Column(db.Date,nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Drug('{self.name}','{self.type}','{self.dose}','{self.daystotake}','{self.packsize}')"

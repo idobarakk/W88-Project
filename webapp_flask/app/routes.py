@@ -2,9 +2,9 @@ import secrets
 import os
 from PIL import Image
 from flask import Flask, render_template, url_for,  flash, redirect, request,abort
-from app.models import User, Notification
+from app.models import User, Notification ,Drug
 from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm, AddNotificationForm
+from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm, AddNotificationForm ,AddDrugForm
 from flask_login import login_user, current_user ,logout_user,login_required
 
 
@@ -15,7 +15,8 @@ from flask_login import login_user, current_user ,logout_user,login_required
 def home():
     if current_user.is_authenticated:
         notifications = Notification.query.filter_by(user_id=current_user.id).order_by(Notification.date.asc()).order_by(Notification.time.asc()).limit(3)
-        return render_template("home.html",notifications=notifications)
+        drugs = Drug.query.filter_by(user_id=current_user.id)
+        return render_template("home.html",notifications=notifications ,drugs=drugs)
     else:
         return render_template("home.html")
 
@@ -23,7 +24,37 @@ def home():
 @app.route("/drugs")
 @login_required
 def drugs():
-    return render_template("drugs.html")
+    if current_user.is_authenticated:
+        drugs = Drug.query.filter_by(user_id=current_user.id)
+        return render_template("drugs.html",drugs=drugs, title="Drugs")
+    else:
+        return render_template("home.html")
+
+
+
+@app.route("/add_drug",methods=['GET','POST'])
+@login_required
+def add_drug():
+    form = AddDrugForm()
+    if form.validate_on_submit():
+        drug = Drug(name=form.name.data,type=form.type.data,dose=form.dose.data,timesaday=form.timesaday.data,daystotake=form.daystotake.data,user_id=current_user.id,startdate=form.startdate.data,packsize=form.packsize.data)
+        db.session.add(drug)
+        db.session.commit()
+        flash('Your Drug has been added !','success')
+        return redirect(url_for('drugs'))
+        
+    return render_template("add_drug.html", title="Add Drug", form=form)
+
+
+@app.route("/delete_drug/<int:drug_id>", methods=['GET','POST'])
+@login_required
+def delete_drug(drug_id):
+    drug = Drug.query.get_or_404(drug_id)
+    db.session.delete(drug)
+    db.session.commit()
+    flash('Your drug has been deleted!', 'success')
+    return redirect(url_for('drugs'))
+
 
 @app.route("/edit_notification/<int:notification_id>",methods=['GET','POST'])
 @login_required
@@ -58,7 +89,7 @@ def delete_notification(notification_id):
     db.session.delete(notification)
     db.session.commit()
     flash('Your notification has been deleted!', 'success')
-    return redirect(url_for('home'))
+    return redirect(url_for('notification'))
 
 
 @app.route("/add_notification",methods=['GET','POST'])

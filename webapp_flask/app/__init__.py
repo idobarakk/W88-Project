@@ -23,10 +23,13 @@ login_manager.login_message_category ='info'
 
 from app import models
 
+
+#to see the relationship - need create view
 class NotificationView(ModelView):
     column_display_pk = True 
     column_hide_backrefs = False
     column_list = ('id', 'title', 'content','date','time','user_id')
+
 
 admin.add_view(ModelView(models.User, db.session))
 admin.add_view(NotificationView(models.Notification, db.session))

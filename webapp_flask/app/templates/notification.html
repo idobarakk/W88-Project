@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Notification Status</h1>
+    <h1>Notifications</h1>
+    <div class="floating-container">
+        <a class="floating-button" href="{{ url_for('add_notification')}}"> +</a>
+    </div>
     {% for notification in notifications %}
       <article class="media content-section">
         <div class="media-body">
@@ -38,4 +41,5 @@
         </div>  
       </article>
     {% endfor %}
+
 {% endblock content %}

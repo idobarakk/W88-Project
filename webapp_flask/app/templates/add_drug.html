@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Add Drugs</h1>
+        <div class="content-section"> 
+            <form method="post" action="">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4"> Add Drugs</legend>
+                    <div class="form-group">
+                        {{ form.name.label(class="form-control-label") }}
+                        {% if form.name.errors %}
+                            {{ form.name(class="form-control form-control-lg is-invalid")}}
+                            <div class="is-invalid">
+                                {% for error in form.name.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.name(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.type.label(class="form-control-label") }}
+                        {% if form.type.errors %}
+                            {{ form.type(class="form-control form-control-lg is-invalid")}}
+                            <div class="is-invalid">
+                                {% for error in form.type.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.type(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.dose.label(class="form-control-label") }}
+                        {% if form.dose.errors %}
+                            {{ form.dose(class="form-control form-control-lg is-invalid")}}
+                            <div class="is-invalid">
+                                {% for error in form.dose.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.dose(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.timesaday.label(class="form-control-label") }}
+                        {% if form.timesaday.errors %}
+                            {{ form.timesaday(class="form-control form-control-lg is-invalid")}}
+                            <div class="is-invalid">
+                                {% for error in form.timesaday.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.timesaday(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.daystotake.label(class="form-control-label") }}
+                        {% if form.daystotake.errors %}
+                            {{ form.daystotake(class="form-control form-control-lg is-invalid")}}
+                            <div class="is-invalid">
+                                {% for error in form.daystotake.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.daystotake(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.startdate.label(class="form-control-label") }}
+                        {% if form.startdate.errors %}
+                            {{ form.startdate(class="form-control form-control-lg is-invalid")}}
+                            <div class="is-invalid">
+                                {% for error in form.startdate.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.startdate(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.packsize.label(class="form-control-label") }}
+                        {% if form.packsize.errors %}
+                            {{ form.packsize(class="form-control form-control-lg is-invalid")}}
+                            <div class="is-invalid">
+                                {% for error in form.packsize.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.packsize(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+
+        </div>
+    {% endblock content %}

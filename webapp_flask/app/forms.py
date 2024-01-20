@@ -1,12 +1,13 @@
+from datetime import datetime
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField
 from flask_login import current_user
-from wtforms import StringField,PasswordField,SubmitField, BooleanField, IntegerField, DateTimeField, DateField, TimeField
+from wtforms import SelectField , StringField,PasswordField,SubmitField, BooleanField, IntegerField, DateTimeField, DateField, TimeField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from app.models import User
-from datetime import datetime
 
 
+# *********** Login \ Register **************
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',validators=[DataRequired(),Length(min=2,max=20) ])
@@ -32,7 +33,7 @@ class LoginForms(FlaskForm):
     remember =BooleanField('Remember Me')
     submit = SubmitField('login')
 
-
+# *********** Notifications **************
 
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username',validators=[DataRequired(),Length(min=2,max=20) ])
@@ -59,7 +60,27 @@ class UpdateAccountForm(FlaskForm):
         
 class AddNotificationForm(FlaskForm):
     title = StringField('Title',validators=[DataRequired()])
-    content = StringField('Content',validators=[DataRequired()])
+    content = TextAreaField('Content',validators=[DataRequired()])
     date = DateField('Date',validators=[DataRequired()])
     time = TimeField('Time',validators=[DataRequired()])
     submit = SubmitField('Add Notification')
+
+    def validate_date (self,date):
+        if date.data <  datetime.utcnow().date():
+            raise ValidationError('the date is not valid - please choose future date.')
+        
+    def validate_time (self,time):
+        if time.data <  datetime.utcnow().time():
+            raise ValidationError('the time is not valid- please choose future time.')
+
+# *********** Drugs **************
+
+class AddDrugForm(FlaskForm):
+    name = StringField('Drug Name',validators=[DataRequired()])
+    type = SelectField('Drug Type',validators=[DataRequired()],choices=[('pill', 'Pills'), ('drop', 'Drops'), ('liquid', 'Liquid (ml)')])
+    dose = IntegerField('Dose (for Drops or Liquid - ml)',validators=[DataRequired()])
+    timesaday = IntegerField('How many times a day?',validators=[DataRequired()])
+    daystotake = IntegerField('How many days to take?',validators=[DataRequired()])
+    startdate = DateField('Starting date',validators=[DataRequired()])
+    packsize = IntegerField('Pack Size?',validators=[DataRequired()])
+    submit = SubmitField('Add Drug')
