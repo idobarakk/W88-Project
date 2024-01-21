@@ -5,3 +5,4 @@ pip install flask_login
 pip install pillow
 pip install flask_wtf
 pip install flask_admin
+pip install flask_admin
