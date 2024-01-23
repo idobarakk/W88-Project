@@ -115,7 +115,7 @@ def notification():
         return render_template("home.html")
 
 
-@app.route("/api")
+@app.route("/api", methods=['GET','POST'])
 def api():
     data = request.json
     if not data:
