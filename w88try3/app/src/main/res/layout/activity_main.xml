@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/TextView4"
-        android:layout_width="325dp"
+        android:layout_width="371dp"
         android:layout_height="450dp"
         android:rotationY="0"
         android:text="TextView" />

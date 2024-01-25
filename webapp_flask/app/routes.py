@@ -3,9 +3,10 @@ import os
 from PIL import Image
 from flask import Flask, render_template, url_for,  flash, redirect, request,abort
 from app.models import User, Notification ,Drug
-from app import app, db, bcrypt
+from app import app, db, bcrypt ,socketio
 from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm, AddNotificationForm ,AddDrugForm
 from flask_login import login_user, current_user ,logout_user,login_required
+
 
 
 
@@ -207,3 +208,18 @@ def account():
 
     image_file= url_for('static',filename = 'profile_pics/'+ current_user.image_file)
     return render_template("account.html",  title='Account', image_file=image_file , form=form)
+
+
+
+@app.route('/send_message')
+def send_message():
+    message = "Hello from Flask!"
+    socketio.emit('my_message', {'data': message})
+    return "Message sent!"
+
+@socketio.on('message')
+def message(data):
+    print('received message: ' + data)
+    #message = "Hello from Flask!"
+    socketio.emit('message', {'message': 'this is data from the flask'+data})
+    return "Message sent!"

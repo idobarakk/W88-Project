@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_socketio import SocketIO
 
 #Create our TakeCare App
 app = Flask(__name__)
@@ -19,6 +20,7 @@ admin = Admin(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category ='info'
+socketio = SocketIO(app,logger=True, engineio_logger=True)
 
 
 from app import models
