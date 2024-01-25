@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        responseTextView = findViewById(TextView4); // Replace with your TextView ID
+        responseTextView = findViewById(TextView4);
         Button myButton = findViewById(R.id.button);
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
