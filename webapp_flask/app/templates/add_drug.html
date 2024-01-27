@@ -63,6 +63,34 @@
                     </div>
 
                     <div class="form-group">
+                        {{ form.taketime.label(class="form-control-label") }}
+                        {% if form.taketime.errors %}
+                            {{ form.taketime(class="form-control form-control-lg is-invalid")}}
+                            <div class="is-invalid">
+                                {% for error in form.taketime.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.taketime(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.gap.label(class="form-control-label") }}
+                        {% if form.gap.errors %}
+                            {{ form.gap(class="form-control form-control-lg is-invalid")}}
+                            <div class="is-invalid">
+                                {% for error in form.gap.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.gap(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
                         {{ form.daystotake.label(class="form-control-label") }}
                         {% if form.daystotake.errors %}
                             {{ form.daystotake(class="form-control form-control-lg is-invalid")}}

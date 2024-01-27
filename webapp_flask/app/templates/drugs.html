@@ -11,7 +11,18 @@
           <big class="text-muted">{{ drug.startdate.strftime('%Y-%m-%d') }} </big>
         </div>
         <h2>{{ drug.name }}</h2>
-        <p class="article-content">{{ drug.type }}</p>>
+        <p class="article-content">{{ drug.type }}</p>
+          <p>
+             startmonth[{{ drug.startdate.strftime('%m') }}]
+               startday[{{ drug.startdate.strftime('%d') }}] packsize[{{ drug.packsize }}]
+              dose[{{ drug.dose }}]
+              timesa day[{{ drug.timesaday }}]
+          </p>
+        <p>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+          </div>
+        </p>
         <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal{{drug.id}}">
           Delete
         </button>

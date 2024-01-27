@@ -5,6 +5,7 @@ from flask_login import current_user
 from wtforms import SelectField , StringField,PasswordField,SubmitField, BooleanField, IntegerField, DateTimeField, DateField, TimeField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from app.models import User
+from app.drugapi import DrugAPI
 
 
 # *********** Login \ Register **************
@@ -82,5 +83,14 @@ class AddDrugForm(FlaskForm):
     timesaday = IntegerField('How many times a day?',validators=[DataRequired()])
     daystotake = IntegerField('How many days to take?',validators=[DataRequired()])
     startdate = DateField('Starting date',validators=[DataRequired()])
+    taketime= TimeField('Take Time ',validators=[DataRequired()])
+    gap = IntegerField('Gap between each take (hours)',validators=[DataRequired()])
     packsize = IntegerField('Pack Size?',validators=[DataRequired()])
     submit = SubmitField('Add Drug')
+
+    def validate_name (self,name):
+        current_drug = DrugAPI(name.data)
+        durg_info = current_drug.check_fda_approval(current_drug.drug_name)
+        if durg_info == None:
+            raise ValidationError('Drug not found in FDA Data Base')
+

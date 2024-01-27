@@ -24,7 +24,7 @@ socketio = SocketIO(app,logger=True, engineio_logger=True)
 
 
 from app import models
-
+from app import drugapi
 
 #to see the relationship - need create view
 class NotificationView(ModelView):

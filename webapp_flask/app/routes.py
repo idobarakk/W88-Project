@@ -2,12 +2,12 @@ import secrets
 import os
 from PIL import Image
 from flask import Flask, render_template, url_for,  flash, redirect, request,abort
-from app.models import User, Notification ,Drug
+from app.models import User, Notification ,Drug, DrugSchedule
 from app import app, db, bcrypt ,socketio
 from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm, AddNotificationForm ,AddDrugForm
 from flask_login import login_user, current_user ,logout_user,login_required
-
-
+from app.drugapi import DrugAPI
+from datetime import timedelta,datetime,time
 
 
 #pages and website logic
@@ -31,6 +31,38 @@ def drugs():
     else:
         return render_template("home.html")
 
+def calc_dates(drug):
+    drug_id = drug.id
+    startdate = drug.startdate
+    gap = drug.gap
+    taketime = drug.taketime
+    packsize = drug.packsize
+    timesaday = drug.timesaday
+    dose = drug.dose
+    daystotake = drug.daystotake
+
+    datelist = []
+    timelist =[]
+
+    dummy_date = datetime(2000, 1, 1)  # Dummy date
+    taketime_datetime = datetime.combine(dummy_date, taketime)
+
+    timelist.append(taketime)
+    while timesaday > 1:
+        taketime_datetime = taketime_datetime + timedelta(hours=gap)
+        timelist.append(taketime_datetime.time())
+        timesaday -= 1
+
+    datelist.append(startdate)
+    while daystotake > 1:
+        startdate = startdate + timedelta(days=1)
+        datelist.append(startdate)
+        daystotake -= 1
+
+    return datelist,timelist
+
+
+
 
 
 @app.route("/add_drug",methods=['GET','POST'])
@@ -38,9 +70,17 @@ def drugs():
 def add_drug():
     form = AddDrugForm()
     if form.validate_on_submit():
-        drug = Drug(name=form.name.data,type=form.type.data,dose=form.dose.data,timesaday=form.timesaday.data,daystotake=form.daystotake.data,user_id=current_user.id,startdate=form.startdate.data,packsize=form.packsize.data)
+        drug = Drug(name=form.name.data,type=form.type.data,dose=form.dose.data,timesaday=form.timesaday.data,daystotake=form.daystotake.data,user_id=current_user.id,startdate=form.startdate.data,packsize=form.packsize.data,gap=form.gap.data,taketime=form.taketime.data)
         db.session.add(drug)
         db.session.commit()
+        drug = Drug.query.filter_by(user_id=current_user.id).order_by(Drug.id.desc()).first()
+        dateslist, timeslist = calc_dates(drug)
+        for date in dateslist:
+            for time in timeslist:
+                drug_schedule = DrugSchedule(user_id=current_user.id,drug_id=drug.id,takedate=date,taketime=time)
+                db.session.add(drug_schedule)
+                db.session.commit()
+
         flash('Your Drug has been added !','success')
         return redirect(url_for('drugs'))
         
@@ -50,9 +90,11 @@ def add_drug():
 @app.route("/delete_drug/<int:drug_id>", methods=['GET','POST'])
 @login_required
 def delete_drug(drug_id):
+
     drug = Drug.query.get_or_404(drug_id)
     db.session.delete(drug)
     db.session.commit()
+
     flash('Your drug has been deleted!', 'success')
     return redirect(url_for('drugs'))
 
@@ -220,6 +262,9 @@ def send_message():
 @socketio.on('message')
 def message(data):
     print('received message: ' + data)
-    #message = "Hello from Flask!"
-    socketio.emit('message', {'message': 'this is data from the flask'+data})
+    current_drug = DrugAPI(data)
+    drug_info = current_drug.check_fda_approval(current_drug.drug_name)
+    print(drug_info)
+
+    socketio.emit('message', {'message': 'this is data from the flask '+str(drug_info)})
     return "Message sent!"
