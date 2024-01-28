@@ -9,3 +9,5 @@ pip install flask-socketio
 pip install --upgrade python-socketio
 pip install --upgrade python-engineio
 pip install --upgrade Flask-SocketIO
+pip install requests
+pip install email_validator

@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Add Activity</h1>
+        <div class="content-section"> 
+            <form method="post" action="">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4"> Add Activity</legend>
+                    <div class="form-group">
+                        {{ form.a1d1(class="form-control form-control-lg is-invalid")}}
+                        {{ form.a1d1.label(class="form-control-label") }}                            
+                    </div>
+                    <div class="form-group">
+                        {{ form.a2d1(class="form-control form-control-lg is-invalid")}}
+                        {{ form.a2d1.label(class="form-control-label") }}                            
+                    </div>
+                    <div class="form-group">
+                        {{ form.a3d1(class="form-control form-control-lg is-invalid")}}
+                        {{ form.a3d1.label(class="form-control-label") }}                            
+                    </div>
+                   
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+
+        </div>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+    {% endblock content %}

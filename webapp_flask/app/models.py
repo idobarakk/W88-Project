@@ -5,6 +5,7 @@ from flask_login import UserMixin
 
 
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -59,3 +60,14 @@ class DrugSchedule(db.Model):
 
     def __repr__(self):
         return f"Drug('{self.id}','{self.takedate}','{self.user_id}','{self.drug_id}')"
+
+class Activities(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    day= db.Column(db.Integer, nullable=False)
+    activity1= db.Column(db.Boolean, nullable=False)
+    activity2= db.Column(db.Boolean, nullable=False)
+    activity3= db.Column(db.Boolean, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Activities('{self.id}','{self.day}','{self.activity1}','{self.activity2}','{self.activity3}' ,'{self.user_id}')"

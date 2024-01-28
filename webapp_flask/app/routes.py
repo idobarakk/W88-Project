@@ -2,9 +2,9 @@ import secrets
 import os
 from PIL import Image
 from flask import Flask, render_template, url_for,  flash, redirect, request,abort
-from app.models import User, Notification ,Drug, DrugSchedule
+from app.models import User, Notification ,Drug, DrugSchedule,Activities
 from app import app, db, bcrypt ,socketio
-from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm, AddNotificationForm ,AddDrugForm
+from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm, AddNotificationForm ,AddDrugForm,AddActivityForm
 from flask_login import login_user, current_user ,logout_user,login_required
 from app.drugapi import DrugAPI
 from datetime import timedelta,datetime,time
@@ -30,6 +30,8 @@ def drugs():
         return render_template("drugs.html",drugs=drugs, title="Drugs")
     else:
         return render_template("home.html")
+    
+
 
 def calc_dates(drug):
     drug_id = drug.id
@@ -268,3 +270,25 @@ def message(data):
 
     socketio.emit('message', {'message': 'this is data from the flask '+str(drug_info)})
     return "Message sent!"
+
+@app.route("/activities")
+@login_required
+def activities():
+    if current_user.is_authenticated:
+        activities = Activities.query.filter_by(user_id=current_user.id)
+        return render_template("activities.html",activities=activities, title="activities")
+    else:
+        return render_template("home.html")
+    
+
+@app.route("/add_activity",methods=['GET','POST'])
+@login_required
+def add_activity():
+    form = AddActivityForm()
+    if form.validate_on_submit():
+        # activity = Activities()
+        # db.session.add(notification)
+        # db.session.commit()
+        return redirect(url_for('activities'))
+        flash('Your Activity has been added !','success')
+    return render_template("add_activity.html", title="Add Activity", form=form)

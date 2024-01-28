@@ -94,3 +94,27 @@ class AddDrugForm(FlaskForm):
         if durg_info == None:
             raise ValidationError('Drug not found in FDA Data Base')
 
+class AddActivityForm(FlaskForm):
+    a1d1 = BooleanField('a1d1')
+    a1d2 = BooleanField('a1d2')
+    a1d3 = BooleanField('a1d3')
+    a1d4 = BooleanField('a1d4')
+    a1d5 = BooleanField('a1d5')
+    a1d6 = BooleanField('a1d6')
+    a1d7 = BooleanField('a1d7')
+    a2d1 = BooleanField('a2d1')
+    a2d2 = BooleanField('a2d2')
+    a2d3 = BooleanField('a2d3')
+    a2d4 = BooleanField('a2d4')
+    a2d5 = BooleanField('a2d5')
+    a2d6 = BooleanField('a2d6')
+    a2d7 = BooleanField('a2d7')
+    a3d1 = BooleanField('a3d1')
+    a3d2 = BooleanField('a3d2')
+    a3d3 = BooleanField('a3d3')
+    a3d4 = BooleanField('a3d4')
+    a3d5 = BooleanField('a3d5')
+    a3d6 = BooleanField('a3d6')
+    a3d7 = BooleanField('a3d7')
+    submit = SubmitField('Add Activities')
+
