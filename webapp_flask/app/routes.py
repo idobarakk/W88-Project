@@ -27,7 +27,8 @@ def home():
 def drugs():
     if current_user.is_authenticated:
         drugs = Drug.query.filter_by(user_id=current_user.id)
-        return render_template("drugs.html",drugs=drugs, title="Drugs")
+        drug_schedule = DrugSchedule.query.filter_by(user_id=current_user.id)
+        return render_template("drugs.html",drugs=drugs,drug_schedule=drug_schedule, title="Drugs")
     else:
         return render_template("home.html")
     
@@ -79,7 +80,7 @@ def add_drug():
         dateslist, timeslist = calc_dates(drug)
         for date in dateslist:
             for time in timeslist:
-                drug_schedule = DrugSchedule(user_id=current_user.id,drug_id=drug.id,takedate=date,taketime=time)
+                drug_schedule = DrugSchedule(user_id=current_user.id,drug_id=drug.id,takedate=date,taketime=time,took=False)
                 db.session.add(drug_schedule)
                 db.session.commit()
 

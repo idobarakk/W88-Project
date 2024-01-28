@@ -55,6 +55,7 @@ class DrugSchedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     takedate = db.Column(db.Date,nullable=False)
     taketime = db.Column(db.Time,nullable=False)
+    took = db.Column(db.Boolean, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     drug_id = db.Column(db.Integer, db.ForeignKey('drug.id'), nullable=False)
 
