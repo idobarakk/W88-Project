@@ -2,7 +2,7 @@ import secrets
 import os
 from PIL import Image
 from flask import Flask, render_template, url_for,  flash, redirect, request,abort
-from app.models import User, Notification ,Drug, DrugSchedule,Activities
+from app.models import User, Notification ,Drug, DrugSchedule,Activities,Elderlyuser
 from app import app, db, bcrypt ,socketio
 from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm, AddNotificationForm ,AddDrugForm,AddActivityForm
 from flask_login import login_user, current_user ,logout_user,login_required
@@ -141,14 +141,15 @@ def delete_notification(notification_id):
 @app.route("/add_notification",methods=['GET','POST'])
 @login_required
 def add_notification():
+    eldelys = Elderlyuser.query.filter_by(user_id=current_user.id)
     form = AddNotificationForm()
     if form.validate_on_submit():
-        notification = Notification(title=form.title.data,content=form.content.data,date=form.date.data,time=form.time.data,user_id=current_user.id)
+        notification = Notification(title=form.title.data,content=form.content.data,date=form.date.data,time=form.time.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
         db.session.add(notification)
         db.session.commit()
         return redirect(url_for('notification'))
         flash('Your Notification has been added !','success')
-    return render_template("add_notification.html", title="Add Notification", form=form)
+    return render_template("add_notification.html", title="Add Notification", form=form ,eldelys=eldelys)
 
 
 @app.route("/notification")
@@ -181,11 +182,13 @@ def register():
         return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
-
         hased_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        elderly_hased_pw = bcrypt.generate_password_hash(form.elderlypassword.data).decode('utf-8')
         user = User(username=form.username.data,email=form.email.data,password=hased_pw)
-        
         db.session.add(user)
+        db.session.commit()
+        elderly_user = Elderlyuser(username=form.elderlyusername.data, password=elderly_hased_pw, user_id=user.id)
+        db.session.add(elderly_user)
         db.session.commit()
         flash('Your account has been Created !','success')
         return redirect(url_for('login'))
@@ -229,8 +232,6 @@ def save_picture(form_picture):
     i.save(picture_path)
 
     return picture_fn
-
-
 
 
 

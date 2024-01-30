@@ -16,11 +16,22 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(100), unique=True,nullable=False)
     image_file = db.Column(db.String(100),nullable=False,default='default.jpg')
     password= db.Column(db.String(60),nullable=False)
+    ElderlyUser = db.relationship('Elderlyuser',backref='creator',lazy=True )
     Notifications = db.relationship('Notification',backref='creator',lazy=True )
     Drugs = db.relationship('Drug',backref='creator',lazy=True )
 
     def __repr__(self):
         return f"User('{self.username}','{self.email}','{self.image_file}')"
+
+class Elderlyuser(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True,nullable=False)
+    password= db.Column(db.String(60),nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+
+    def __repr__(self):
+        return f"ElderlyUser('{self.id}','{self.username}','{self.password}')"
 
   
 class Notification(db.Model):
@@ -30,9 +41,10 @@ class Notification(db.Model):
     date = db.Column(db.Date,nullable=False)
     time = db.Column(db.Time,nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    elderly_user_id = db.Column(db.Integer, db.ForeignKey('elderlyuser.id'), nullable=False)
 
     def __repr__(self):
-        return f"Notification('{self.title}','{self.content}','{self.date}','{self.user_id}','{self.id}')"
+        return f"Notification('{self.title}','{self.content}','{self.date}','{self.user_id}','{self.id},'{self.elderly_user_id}')"
 
 class Drug(db.Model):
     id = db.Column(db.Integer, primary_key=True)

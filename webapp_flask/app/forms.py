@@ -15,6 +15,9 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email',validators=[DataRequired(),Email()])
     password = PasswordField('Password',validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(),EqualTo('password')])
+    elderlyusername = StringField('Username',validators=[DataRequired(),Length(min=2,max=20) ])
+    elderlypassword = PasswordField('Password', validators=[DataRequired()])
+    elderlyconfirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('elderlypassword')])
     submit = SubmitField('Sign Up')
 
     def validate_username (self,username):
@@ -26,6 +29,11 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('That email is taken. Choose a diffrent one.')
+
+    def validate_elderlyusername(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('That Username is taken. Choose a diffrent one.')
 
 
 class LoginForms(FlaskForm):
@@ -60,6 +68,7 @@ class UpdateAccountForm(FlaskForm):
         
         
 class AddNotificationForm(FlaskForm):
+    eldrly = SelectField('Eldrly user', validators=[DataRequired()])
     title = StringField('Title',validators=[DataRequired()])
     content = TextAreaField('Content',validators=[DataRequired()])
     date = DateField('Date',validators=[DataRequired()])
