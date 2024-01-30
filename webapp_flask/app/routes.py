@@ -8,18 +8,18 @@ from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm, AddNotifi
 from flask_login import login_user, current_user ,logout_user,login_required
 from app.drugapi import DrugAPI
 from datetime import timedelta,datetime,time
+import json
 
 
 #pages and website logic
 @app.route("/")
 @app.route("/home")
+@login_required
 def home():
-    if current_user.is_authenticated:
-        notifications = Notification.query.filter_by(user_id=current_user.id).order_by(Notification.date.asc()).order_by(Notification.time.asc()).limit(3)
-        drugs = Drug.query.filter_by(user_id=current_user.id)
-        return render_template("home.html",notifications=notifications ,drugs=drugs)
-    else:
-        return render_template("home.html")
+    notifications = Notification.query.filter_by(user_id=current_user.id).order_by(Notification.date.asc()).order_by(Notification.time.asc()).limit(3)
+    drugs = Drug.query.filter_by(user_id=current_user.id)
+    return render_template("home.html",notifications=notifications ,drugs=drugs)
+
 
 
 @app.route("/drugs")
@@ -262,15 +262,7 @@ def send_message():
     socketio.emit('my_message', {'data': message})
     return "Message sent!"
 
-@socketio.on('message')
-def message(data):
-    print('received message: ' + data)
-    current_drug = DrugAPI(data)
-    drug_info = current_drug.check_fda_approval(current_drug.drug_name)
-    print(drug_info)
 
-    socketio.emit('message', {'message': 'this is data from the flask '+str(drug_info)})
-    return "Message sent!"
 
 @app.route("/activities")
 @login_required
@@ -293,3 +285,42 @@ def add_activity():
         return redirect(url_for('activities'))
         flash('Your Activity has been added !','success')
     return render_template("add_activity.html", title="Add Activity", form=form)
+
+
+# @socketio.on('message')
+# def message(data):
+#     print(data)
+#     socketio.emit('message', data)
+#     login_user(data)
+#     #print('received message: ' + data)
+#     #current_drug = DrugAPI(data)
+#     #drug_info = current_drug.check_fda_approval(current_drug.drug_name)
+#     #print(drug_info)
+#
+#     #socketio.emit('message', {'message': 'this is data from the flask '+str(drug_info)})
+#     return "Message sent!"
+
+@socketio.on('message')
+def message(data):
+    try:
+        # If 'data' is a JSON string, convert it to a dictionary
+        data_dict = json.loads(data)
+    except json.JSONDecodeError:
+        # If 'data' is not a valid JSON string, handle the error
+        print("Received data is not in JSON format:", data)
+        return "Invalid data format"
+
+    # Now you can safely use the get method on the dictionary
+    user_email_or_username = data_dict.get("email_or_username")
+    user = User.query.filter_by(email=user_email_or_username).first()  # or username
+    if current_user.is_authenticated:
+
+        drug = DrugSchedule.query.filter_by(user_id=current_user.id).all()
+        socketio.emit('message', {'message': str(drug)})
+    if user:
+        login_user(user)
+        socketio.emit('message', {'message': 'User logged in'})
+    else:
+        socketio.emit('message', {'message': 'User not found'})
+
+    return "Message processed!"

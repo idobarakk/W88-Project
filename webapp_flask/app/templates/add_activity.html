@@ -6,10 +6,167 @@
                 {{ form.hidden_tag() }}
                 <fieldset class="form-group">
                     <legend class="border-bottom mb-4"> Add Activity</legend>
-                    <div class="form-group">
-                        {{ form.a1d1(class="form-control form-control-lg is-invalid")}}
-                        {{ form.a1d1.label(class="form-control-label") }}                            
+                    <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Activity 1</th>
+                <th scope="col">Activity 2</th>
+                <th scope="col">Activity 3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Sunday</th>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a1d1(class="form-check-input")}}
+                        {{ form.a1d1.label(class="form-check-label") }}
                     </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        {{ form.a2d1(class="form-check-input")}}
+                        {{ form.a2d1.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        {{ form.a3d1(class="form-check-input")}}
+                        {{ form.a3d1.label(class="form-check-label") }}
+                    </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Monday</th>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a1d2(class="form-check-input")}}
+                        {{ form.a1d2.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a2d2(class="form-check-input")}}
+                        {{ form.a2d2.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a3d2(class="form-check-input")}}
+                        {{ form.a3d2.label(class="form-check-label") }}
+                    </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Tuesday</th>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a1d3(class="form-check-input")}}
+                        {{ form.a1d3.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a2d3(class="form-check-input")}}
+                        {{ form.a2d3.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a3d3(class="form-check-input")}}
+                        {{ form.a3d3.label(class="form-check-label") }}
+                    </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Wednesday</th>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a1d4(class="form-check-input")}}
+                        {{ form.a1d4.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a2d4(class="form-check-input")}}
+                        {{ form.a2d4.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a3d4(class="form-check-input")}}
+                        {{ form.a3d4.label(class="form-check-label") }}
+                    </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Thursday</th>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a1d5(class="form-check-input")}}
+                        {{ form.a1d5.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a2d5(class="form-check-input")}}
+                        {{ form.a2d5.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a3d5(class="form-check-input")}}
+                        {{ form.a3d5.label(class="form-check-label") }}
+                    </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Friday</th>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a1d6(class="form-check-input")}}
+                        {{ form.a1d6.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a2d6(class="form-check-input")}}
+                        {{ form.a2d6.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a3d6(class="form-check-input")}}
+                        {{ form.a3d6.label(class="form-check-label") }}
+                    </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Saturday</th>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a1d7(class="form-check-input")}}
+                        {{ form.a1d7.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a2d7(class="form-check-input")}}
+                        {{ form.a2d7.label(class="form-check-label") }}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group ">
+                        {{ form.a3d7(class="form-check-input")}}
+                        {{ form.a3d7.label(class="form-check-label") }}
+                    </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+
                     <div class="form-group">
                         {{ form.a2d1(class="form-control form-control-lg is-invalid")}}
                         {{ form.a2d1.label(class="form-control-label") }}                            
@@ -26,34 +183,5 @@
             </form>
 
         </div>
-        <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
-          </table>
+
     {% endblock content %}
