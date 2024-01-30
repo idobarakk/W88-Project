@@ -2,11 +2,65 @@
 {% block content %}
 <h1>Activities Page</h1>
 <div class="floating-container">
-    <a class="floating-button" href="{{ url_for('add_activity')}}"> +</a>
+    <a class="floating-button" href="{{ url_for('add_activity')}}">Edit</a>
 </div>
 
 
+<table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Activity 1</th>
+                <th scope="col">Activity 2</th>
+                <th scope="col">Activity 3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Sunday</th>
+                <td>{{activities}} </td>
+                <td> </td>
+                <td> </td>
+              </tr>
+              <tr>
+                <th scope="row">Monday</th>
+                <td>{{activities}} </td>
+                <td> </td>
+                <td> </td>
+              </tr>
+              <tr>
+                <th scope="row">Tuesday</th>
+                <td>{{activities}} </td>
+                <td> </td>
+                <td> </td>
+              </tr>
+              <tr>
+                <th scope="row">Wednesday</th>
+                <td>{{activities}} </td>
+                <td> </td>
+                <td> </td>
+              </tr>
+              <tr>
+                <th scope="row">Thursday</th>
+                <td>{{activities}} </td>
+                <td> </td>
+                <td> </td>
+              </tr>
+              <tr>
+                <th scope="row">Friday</th>
+                <td>{{activities}} </td>
+                <td> </td>
+                <td> </td>
+              </tr>
+              <tr>
+                <th scope="row">Saturday</th>
+                <td>{{activities}} </td>
+                <td> </td>
+                <td> </td>
+              </tr>
 
+            </tbody>
+          </table>
 
 
 
