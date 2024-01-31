@@ -162,6 +162,11 @@ a.article-title:hover {
   box-shadow: 0 20px 20px -10px rgba(255, 152, 0, 0.5);
 }
 
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}
+
 .progress-bar-marker {
   background-image: linear-gradient(90deg, rgba(225, 225, 225, 0.1) 97%, rgba(204, 0, 0, 1) 3%);
 }

@@ -18,7 +18,9 @@ import json
 def home():
     notifications = Notification.query.filter_by(user_id=current_user.id).order_by(Notification.date.asc()).order_by(Notification.time.asc()).limit(3)
     drugs = Drug.query.filter_by(user_id=current_user.id)
-    return render_template("home.html",notifications=notifications ,drugs=drugs)
+    eldelys = Elderlyuser.query.filter_by(user_id=current_user.id)
+    eldelys_dict = {i.id: i.username for i in eldelys}
+    return render_template("home.html",notifications=notifications ,drugs=drugs,eldelys_dict=eldelys_dict)
 
 
 
@@ -105,7 +107,10 @@ def delete_drug(drug_id):
 @app.route("/edit_notification/<int:notification_id>",methods=['GET','POST'])
 @login_required
 def edit_notification(notification_id):
+    eldelys = Elderlyuser.query.filter_by(user_id=current_user.id)
+    eldelys_list = [(i.id, i.username) for i in eldelys]
     form = AddNotificationForm()
+    form.eldrly.choices = eldelys_list
     notification = Notification.query.get_or_404(notification_id)
     if notification.user_id != current_user.id:
         abort(403)
@@ -114,6 +119,7 @@ def edit_notification(notification_id):
         notification.content = form.content.data
         notification.date = form.date.data
         notification.time = form.time.data
+        notification.elderly_user_id = form.eldrly.data
         db.session.commit()
         flash('Your Notification has been Updated !','success')
         return redirect(url_for('notification'))
@@ -123,7 +129,8 @@ def edit_notification(notification_id):
         form.content.data = notification.content  
         form.date.data = notification.date 
         form.time.data = notification.time
-    return render_template("edit_notification.html", title="edit Notification", notification=notification, form=form)
+        form.eldrly.data = notification.elderly_user_id
+    return render_template("edit_notification.html", title="edit Notification", notification=notification, form=form,eldelys_list=eldelys_list)
 
 
 @app.route("/delete_notification/<int:notification_id>", methods=['GET','POST'])
@@ -142,14 +149,16 @@ def delete_notification(notification_id):
 @login_required
 def add_notification():
     eldelys = Elderlyuser.query.filter_by(user_id=current_user.id)
+    eldelys_list = [(i.id,i.username) for i in  eldelys ]
     form = AddNotificationForm()
+    form.eldrly.choices = eldelys_list
     if form.validate_on_submit():
         notification = Notification(title=form.title.data,content=form.content.data,date=form.date.data,time=form.time.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
         db.session.add(notification)
         db.session.commit()
         return redirect(url_for('notification'))
         flash('Your Notification has been added !','success')
-    return render_template("add_notification.html", title="Add Notification", form=form ,eldelys=eldelys)
+    return render_template("add_notification.html", title="Add Notification", form=form ,eldelys_list=eldelys_list)
 
 
 @app.route("/notification")
@@ -157,7 +166,9 @@ def add_notification():
 def notification():
     if current_user.is_authenticated:
         notifications = Notification.query.filter_by(user_id=current_user.id).order_by(Notification.date.asc()).order_by(Notification.time.asc())
-        return render_template("notification.html",notifications=notifications, title="Notification")
+        eldelys = Elderlyuser.query.filter_by(user_id=current_user.id)
+        eldelys_dict = {i.id: i.username for i in eldelys}
+        return render_template("notification.html",notifications=notifications,eldelys_dict=eldelys_dict, title="Notification")
     else:
         return render_template("home.html")
 
@@ -184,12 +195,19 @@ def register():
     if form.validate_on_submit():
         hased_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         elderly_hased_pw = bcrypt.generate_password_hash(form.elderlypassword.data).decode('utf-8')
+        if form.elderlypassword.data:
+            elderly2_hased_pw = bcrypt.generate_password_hash(form.elderlypassword2.data).decode('utf-8')
         user = User(username=form.username.data,email=form.email.data,password=hased_pw)
         db.session.add(user)
         db.session.commit()
         elderly_user = Elderlyuser(username=form.elderlyusername.data, password=elderly_hased_pw, user_id=user.id)
         db.session.add(elderly_user)
         db.session.commit()
+        if form.elderlypassword.data:
+            elderly2_hased_pw = bcrypt.generate_password_hash(form.elderlypassword2.data).decode('utf-8')
+            elderly_user2 = Elderlyuser(username=form.elderlyusername2.data, password=elderly2_hased_pw, user_id=user.id)
+            db.session.add(elderly_user2)
+            db.session.commit()
         flash('Your account has been Created !','success')
         return redirect(url_for('login'))
     return render_template("register.html",  title="Register", form=form)

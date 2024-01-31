@@ -1,10 +1,11 @@
 from datetime import datetime
+import pytz
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField
 from flask_login import current_user
 from wtforms import SelectField , StringField,PasswordField,SubmitField, BooleanField, IntegerField, DateTimeField, DateField, TimeField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from app.models import User
+from app.models import User, Elderlyuser
 from app.drugapi import DrugAPI
 
 
@@ -18,6 +19,9 @@ class RegistrationForm(FlaskForm):
     elderlyusername = StringField('Username',validators=[DataRequired(),Length(min=2,max=20) ])
     elderlypassword = PasswordField('Password', validators=[DataRequired()])
     elderlyconfirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('elderlypassword')])
+    elderlyusername2 = StringField('Username #2', validators=[Length(min=2, max=20)])
+    elderlypassword2 = PasswordField('Password ')
+    elderlyconfirm_password2 = PasswordField('Confirm Password', validators=[EqualTo('elderlypassword2')])
     submit = SubmitField('Sign Up')
 
     def validate_username (self,username):
@@ -30,10 +34,16 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError('That email is taken. Choose a diffrent one.')
 
-    def validate_elderlyusername(self, username):
-        user = User.query.filter_by(username=username.data).first()
+    def validate_elderlyusername(self, elderlyusername):
+        user = Elderlyuser.query.filter_by(username=elderlyusername.data).first()
         if user:
             raise ValidationError('That Username is taken. Choose a diffrent one.')
+
+    def validate_elderlyusername2(self, elderlyusername2):
+        user = User.query.filter_by(username=elderlyusername2.data).first()
+        if user:
+            raise ValidationError('That Username is taken. Choose a diffrent one.')
+
 
 
 class LoginForms(FlaskForm):
@@ -68,21 +78,33 @@ class UpdateAccountForm(FlaskForm):
         
         
 class AddNotificationForm(FlaskForm):
-    eldrly = SelectField('Eldrly user', validators=[DataRequired()])
+    eldrly = SelectField('Eldrly user',coerce=str, validators=[DataRequired()])
     title = StringField('Title',validators=[DataRequired()])
     content = TextAreaField('Content',validators=[DataRequired()])
     date = DateField('Date',validators=[DataRequired()])
     time = TimeField('Time',validators=[DataRequired()])
     submit = SubmitField('Add Notification')
 
-    def validate_date (self,date):
-        if date.data <  datetime.utcnow().date():
-            raise ValidationError('the date is not valid - please choose future date.')
-        
-    def validate_time (self,time):
-        if time.data <  datetime.utcnow().time():
-            raise ValidationError('the time is not valid- please choose future time.')
+    def validate_date(self, field):
+        local_tz = pytz.timezone('Asia/Jerusalem')
+        current_datetime = datetime.now(local_tz)
+        current_date = current_datetime.date()
+        current_time = current_datetime.time()
 
+        # Combine the date and time fields into a datetime object
+        input_datetime_local = datetime.combine(field.data, self.time.data, tzinfo=local_tz)
+
+        # Check if the selected date is in the past
+        if field.data < current_date:
+            raise ValidationError('The date must be in the future.')
+
+        # Check if the date is today and the selected time is in the past
+        if field.data == current_date and self.time.data < current_time:
+            raise ValidationError('The time must be in the future.')
+
+    def validate_time(self, field):
+        # This method is left empty because the validation is handled in validate_date
+        pass
 # *********** Drugs **************
 
 class AddDrugForm(FlaskForm):
