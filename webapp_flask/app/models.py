@@ -58,6 +58,7 @@ class Drug(db.Model):
     daystotake = db.Column(db.Integer,nullable=False)
     startdate = db.Column(db.Date,nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    elderly_user_id = db.Column(db.Integer, db.ForeignKey('elderlyuser.id'), nullable=False)
     drugschedules = db.relationship("DrugSchedule", cascade="all, delete")
 
     def __repr__(self):
@@ -70,6 +71,7 @@ class DrugSchedule(db.Model):
     took = db.Column(db.Boolean, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     drug_id = db.Column(db.Integer, db.ForeignKey('drug.id'), nullable=False)
+    elderly_user_id = db.Column(db.Integer, db.ForeignKey('elderlyuser.id'), nullable=False)
 
     def __repr__(self):
         return f"Drug('{self.id}','{self.takedate}','{self.user_id}','{self.drug_id}')"

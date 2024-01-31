@@ -4,14 +4,11 @@
     <list default="true" id="f3180463-6dad-48bd-9f0d-8f9c6e654c20" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/add_notification.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/add_notification.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/edit_notification.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/edit_notification.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/add_drug.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/add_drug.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/drugs.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/drugs.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/notification.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/notification.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flask_liberies.bat" beforeDir="false" afterPath="$PROJECT_DIR$/flask_liberies.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/instance/site.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/site.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

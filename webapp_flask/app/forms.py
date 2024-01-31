@@ -108,6 +108,7 @@ class AddNotificationForm(FlaskForm):
 # *********** Drugs **************
 
 class AddDrugForm(FlaskForm):
+    eldrly = SelectField('Eldrly user', coerce=str, validators=[DataRequired()])
     name = StringField('Drug Name',validators=[DataRequired()])
     type = SelectField('Drug Type',validators=[DataRequired()],choices=[('pill', 'Pills'), ('drop', 'Drops'), ('liquid', 'Liquid (ml)')])
     dose = IntegerField('Dose (for Drops or Liquid - ml)',validators=[DataRequired()])

@@ -30,7 +30,9 @@ def drugs():
     if current_user.is_authenticated:
         drugs = Drug.query.filter_by(user_id=current_user.id)
         drug_schedule = DrugSchedule.query.filter_by(user_id=current_user.id)
-        return render_template("drugs.html",drugs=drugs,drug_schedule=drug_schedule, title="Drugs")
+        eldelys = Elderlyuser.query.filter_by(user_id=current_user.id)
+        eldelys_dict = {i.id: i.username for i in eldelys}
+        return render_template("drugs.html",drugs=drugs,drug_schedule=drug_schedule, title="Drugs",eldelys_dict=eldelys_dict)
     else:
         return render_template("home.html")
     
@@ -73,23 +75,26 @@ def calc_dates(drug):
 @app.route("/add_drug",methods=['GET','POST'])
 @login_required
 def add_drug():
+    eldelys = Elderlyuser.query.filter_by(user_id=current_user.id)
+    eldelys_list = [(i.id,i.username) for i in  eldelys ]
     form = AddDrugForm()
+    form.eldrly.choices = eldelys_list
     if form.validate_on_submit():
-        drug = Drug(name=form.name.data,type=form.type.data,dose=form.dose.data,timesaday=form.timesaday.data,daystotake=form.daystotake.data,user_id=current_user.id,startdate=form.startdate.data,packsize=form.packsize.data,gap=form.gap.data,taketime=form.taketime.data)
+        drug = Drug(name=form.name.data,type=form.type.data,dose=form.dose.data,timesaday=form.timesaday.data,daystotake=form.daystotake.data,user_id=current_user.id,startdate=form.startdate.data,packsize=form.packsize.data,gap=form.gap.data,taketime=form.taketime.data,elderly_user_id=form.eldrly.data)
         db.session.add(drug)
         db.session.commit()
         drug = Drug.query.filter_by(user_id=current_user.id).order_by(Drug.id.desc()).first()
         dateslist, timeslist = calc_dates(drug)
         for date in dateslist:
             for time in timeslist:
-                drug_schedule = DrugSchedule(user_id=current_user.id,drug_id=drug.id,takedate=date,taketime=time,took=False)
+                drug_schedule = DrugSchedule(user_id=current_user.id,drug_id=drug.id,takedate=date,taketime=time,took=False,elderly_user_id=form.eldrly.data)
                 db.session.add(drug_schedule)
                 db.session.commit()
 
         flash('Your Drug has been added !','success')
         return redirect(url_for('drugs'))
         
-    return render_template("add_drug.html", title="Add Drug", form=form)
+    return render_template("add_drug.html", title="Add Drug", form=form,eldelys_list=eldelys_list)
 
 
 @app.route("/delete_drug/<int:drug_id>", methods=['GET','POST'])

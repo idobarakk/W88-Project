@@ -36,11 +36,20 @@
       {% for drug in drugs %}
       <article class="media content-section">
         <div class="media-body">
+                <div class="article-title">
+                    <big>{{ eldelys_dict[drug.elderly_user_id] }}</big>
+                </div>
           <div class="article-metadata">
             <big class="text-muted">{{ drug.startdate.strftime('%Y-%m-%d') }} </big>
           </div>
           <h2>{{ drug.name }}</h2>
-          <p class="article-content">{{ drug.type }}</p>>
+            <p>
+              <strong>Type: </strong> {{ drug.type }}&nbsp; &nbsp; &nbsp; &nbsp;
+              <strong>Start date:</strong> {{ drug.startdate.strftime('%d-%m-%y') }} &nbsp; &nbsp; &nbsp; &nbsp;
+              <strong>Pack size:</strong> {{ drug.packsize }} &nbsp; &nbsp; &nbsp; &nbsp;
+              <strong> Dose: </strong>{{ drug.dose }} &nbsp; &nbsp; &nbsp; &nbsp;
+              <strong>Times a day: </strong>{{ drug.timesaday }} &nbsp;
+            </p>
         </div>
       </article>
       {% endfor %}
