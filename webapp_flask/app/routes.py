@@ -187,10 +187,10 @@ def api():
     return [data,data]
 
 
-@app.route("/about")
-@login_required
-def about():
-    return render_template("about.html")
+# @app.route("/about")
+# @login_required
+# def about():
+#     return render_template("about.html")
 
 
 @app.route("/register", methods=['GET','POST'])
@@ -323,8 +323,6 @@ def add_activity():
         activity = Activities(day=7,activity1=form.a1d7.data,activity2=form.a2d7.data,activity3=form.a3d7.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
         db.session.add(activity)
         db.session.commit()
-        drug = Drug.query.filter_by(user_id=current_user.id).order_by(Drug.id.desc()).first()
-        dateslist, timeslist = calc_dates(drug)
         flash('Your Activity has been added !', 'success')
         return redirect(url_for('activities'))
     return render_template("add_activity.html", title="Add Activity", form=form)
@@ -359,7 +357,7 @@ def message(data):
     if current_user.is_authenticated:
 
         drug = DrugSchedule.query.filter_by(user_id=current_user.id).all()
-        socketio.emit('message', {'message': str(drug)})
+        socketio.emit('drug', {'message': str(drug)})
     if user:
         login_user(user)
         socketio.emit('message', {'message': 'User logged in'})
@@ -367,3 +365,17 @@ def message(data):
         socketio.emit('message', {'message': 'User not found'})
 
     return "Message processed!"
+
+# @socketio.on('message')
+# def message(data):
+#     try:
+#         # If 'data' is a JSON string, convert it to a dictionary
+#         data_dict = json.loads(data)
+#     except json.JSONDecodeError:
+#         # If 'data' is not a valid JSON string, handle the error
+#         print("Received data is not in JSON format:", data)
+#         return "Invalid data format"
+#
+#     print(data)
+#     socketio.emit('stam', data)
+#     return data
