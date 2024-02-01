@@ -127,6 +127,7 @@ class AddDrugForm(FlaskForm):
             raise ValidationError('Drug not found in FDA Data Base')
 
 class AddActivityForm(FlaskForm):
+    eldrly = SelectField('Eldrly user', coerce=str, validators=[DataRequired()])
     a1d1 = BooleanField('a1d1')
     a1d2 = BooleanField('a1d2')
     a1d3 = BooleanField('a1d3')

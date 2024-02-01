@@ -83,6 +83,6 @@ class Activities(db.Model):
     activity2= db.Column(db.Boolean, nullable=False)
     activity3= db.Column(db.Boolean, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
+    elderly_user_id = db.Column(db.Integer, db.ForeignKey('elderlyuser.id'), nullable=False)
     def __repr__(self):
         return f"Activities('{self.id}','{self.day}','{self.activity1}','{self.activity2}','{self.activity3}' ,'{self.user_id}')"

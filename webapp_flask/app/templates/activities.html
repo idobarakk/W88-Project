@@ -1,12 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Activities Page</h1>
-<div class="floating-container">
-    <a class="floating-button" href="{{ url_for('add_activity')}}">Edit</a>
-</div>
+  <h1>Activities Page</h1>
+  <div class="floating-container">
+      <a class="floating-button" href="{{ url_for('add_activity')}}"> +</a>
+  </div>
 
 
-<table class="table">
+
+  <table class="table">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -61,7 +62,6 @@
 
             </tbody>
           </table>
-
 
 
 {% endblock content %}
