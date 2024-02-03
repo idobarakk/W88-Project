@@ -4,7 +4,6 @@
   <div class="floating-container">
       <a class="floating-button" href="{{ url_for('add_activity')}}"> +</a>
   </div>
-    {% if activities.count() == 0  %}
         <table class="table">
             <thead>
               <tr>
@@ -60,10 +59,9 @@
 
             </tbody>
           </table>
-    {% else %}
-      <p>{{activities}}</p>
 
-  {% endif %}
+
+
 
 {% endblock content %}
 
