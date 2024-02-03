@@ -162,8 +162,8 @@ def add_notification():
         notification = Notification(title=form.title.data,content=form.content.data,date=form.date.data,time=form.time.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
         db.session.add(notification)
         db.session.commit()
-        return redirect(url_for('notification'))
         flash('Your Notification has been added !','success')
+        return redirect(url_for('notification'))
     return render_template("add_notification.html", title="Add Notification", form=form ,eldelys_list=eldelys_list)
 
 
@@ -310,18 +310,24 @@ def add_activity():
     if form.validate_on_submit():
         activity = Activities(day=1,activity1=form.a1d1.data,activity2=form.a2d1.data,activity3=form.a3d1.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
         db.session.add(activity)
+
         activity = Activities(day=2,activity1=form.a1d2.data,activity2=form.a2d2.data,activity3=form.a3d2.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
         db.session.add(activity)
+
         activity = Activities(day=3,activity1=form.a1d3.data,activity2=form.a2d3.data,activity3=form.a3d3.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
         db.session.add(activity)
+
         activity = Activities(day=4,activity1=form.a1d4.data,activity2=form.a2d4.data,activity3=form.a3d4.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
         db.session.add(activity)
+
         activity = Activities(day=5,activity1=form.a1d5.data,activity2=form.a2d5.data,activity3=form.a3d5.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
         db.session.add(activity)
-        activity = Activities(day=6,activity1=form.a1d6.data,activity2=form.a2d6.data,activity6=form.a3d6.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
+
+        activity = Activities(day=6,activity1=form.a1d6.data,activity2=form.a2d6.data,activity3=form.a3d6.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
         db.session.add(activity)
+
         activity = Activities(day=7,activity1=form.a1d7.data,activity2=form.a2d7.data,activity3=form.a3d7.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
-        db.session.add(activity)
+
         db.session.commit()
         flash('Your Activity has been added !', 'success')
         return redirect(url_for('activities'))

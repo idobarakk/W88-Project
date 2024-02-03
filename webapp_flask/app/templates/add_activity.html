@@ -6,6 +6,10 @@
                 {{ form.hidden_tag() }}
                 <fieldset class="form-group">
                     <legend class="border-bottom mb-4"> Add Activity</legend>
+                    <div class="form-group">
+                        {{ form.eldrly.label(class="form-control-label") }}
+                        {{ form.eldrly(class="form-control form-control-lg") }}
+                    </div>
                     <table class="table">
                         <thead>
                           <tr>
@@ -171,4 +175,5 @@
                 </div>
             </form>
         </div>
-    {% endblock content %}
+
+{% endblock content %}
