@@ -294,7 +294,10 @@ def send_message():
 def activities():
     if current_user.is_authenticated:
         activities = Activities.query.filter_by(user_id=current_user.id)
-        return render_template("activities.html",activities=activities, title="activities")
+        a1d1 = Activities.query.filter_by(user_id=current_user.id).order_by(Activities.day.asc())
+        notifications = Notification.query.filter_by(user_id=current_user.id).order_by(Notification.date.asc()).order_by(Notification.time.asc())
+
+        return render_template("activities.html",activities=activities, title="activities",a1d1=a1d1)
     else:
         return render_template("home.html")
     
@@ -327,7 +330,7 @@ def add_activity():
         db.session.add(activity)
 
         activity = Activities(day=7,activity1=form.a1d7.data,activity2=form.a2d7.data,activity3=form.a3d7.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
-
+        db.session.add(activity)
         db.session.commit()
         flash('Your Activity has been added !', 'success')
         return redirect(url_for('activities'))
