@@ -293,11 +293,17 @@ def send_message():
 @login_required
 def activities():
     if current_user.is_authenticated:
-        activities = Activities.query.filter_by(user_id=current_user.id)
-        a1d1 = Activities.query.filter_by(user_id=current_user.id).order_by(Activities.day.asc())
-        notifications = Notification.query.filter_by(user_id=current_user.id).order_by(Notification.date.asc()).order_by(Notification.time.asc())
+        activities = Activities.query.filter_by(user_id=current_user.id).order_by(Activities.day.asc())
+        d1 = Activities.query.filter_by(user_id=current_user.id, day=1).first()
+        d2 = Activities.query.filter_by(user_id=current_user.id, day=2).first()
+        d3 = Activities.query.filter_by(user_id=current_user.id, day=3).first()
+        d4 = Activities.query.filter_by(user_id=current_user.id, day=4).first()
+        d5 = Activities.query.filter_by(user_id=current_user.id, day=5).first()
+        d6 = Activities.query.filter_by(user_id=current_user.id, day=6).first()
+        d7 = Activities.query.filter_by(user_id=current_user.id, day=7).first()
 
-        return render_template("activities.html",activities=activities, title="activities",a1d1=a1d1)
+
+        return render_template("activities.html",activities=activities, title="activities",d1=d1,d2=d2,d3=d3,d4=d4,d5=d5,d6=d6,d7=d7)
     else:
         return render_template("home.html")
     

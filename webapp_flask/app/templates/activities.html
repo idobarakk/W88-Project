@@ -16,45 +16,46 @@
             <tbody>
               <tr>
                 <th scope="row">Sunday</th>
-                <td>{{a1d1.label}} </td>
-                <td> </td>
-                <td> </td>
+
+                <td style="{{ 'color: red;' if d1 and d1.activity1 else 'color: green;' }}">{{ 'V' if d1 and d1.activity1 else 'X' }}</td>
+                <td>{{ 'Yes' if d1 and d1.activity2 else 'X' }}</td>
+                <td>{{ 'Yes' if d1 and d1.activity3 else 'X' }}</td>
               </tr>
               <tr>
                 <th scope="row">Monday</th>
-                <td>{{activities}} </td>
-                <td> </td>
-                <td> </td>
+                <td>{{ 'V' if d2 and d2.activity1 else 'X' }} </td>
+                <td>{{ 'V' if d2 and d2.activity2 else 'X' }}  </td>
+                <td>{{ 'V' if d2 and d2.activity3 else 'X' }}</td>
               </tr>
               <tr>
                 <th scope="row">Tuesday</th>
-                <td>{{activities}} </td>
-                <td> </td>
-                <td> </td>
+                <td>{{ 'V' if d3 and d3.activity1 else 'X' }} </td>
+                <td>{{ 'V' if d3 and d3.activity2 else 'X' }}</td>
+                <td>{{ 'V' if d3 and d3.activity3 else 'X' }}</td>
               </tr>
               <tr>
                 <th scope="row">Wednesday</th>
-                <td>{{activities}} </td>
-                <td> </td>
-                <td> </td>
+                <td>{{ 'V' if d4 and d4.activity1 else 'X' }} </td>
+                <td>{{ 'V' if d4 and d4.activity2 else 'X' }}</td>
+                <td>{{ 'V' if d4 and d4.activity3 else 'X' }}</td>
               </tr>
               <tr>
                 <th scope="row">Thursday</th>
-                <td>{{activities}} </td>
-                <td> </td>
-                <td> </td>
+                <td>{{ 'V' if d5 and d5.activity1 else 'X' }} </td>
+                <td>{{ 'V' if d5 and d5.activity2 else 'X' }}</td>
+                <td>{{ 'V' if d5 and d5.activity3 else 'X' }}</td>
               </tr>
               <tr>
                 <th scope="row">Friday</th>
-                <td>{{activities}} </td>
-                <td> </td>
-                <td> </td>
+                <td>{{ 'V' if d6 and d6.activity1 else 'X' }} </td>
+                <td>{{ 'V' if d6 and d6.activity2 else 'X' }}</td>
+                <td>{{ 'V' if d6 and d6.activity3 else 'X' }}</td>
               </tr>
               <tr>
                 <th scope="row">Saturday</th>
-                <td>{{activities}} </td>
-                <td> </td>
-                <td> </td>
+                <td>{{ 'V' if d7 and d7.activity1 else 'X' }} </td>
+                <td>{{ 'V' if d7 and d7.activity2 else 'X' }}</td>
+                <td>{{ 'V' if d7 and d7.activity3 else 'X' }}</td>
               </tr>
 
             </tbody>
