@@ -358,29 +358,40 @@ def add_activity():
 
 @socketio.on('message')
 def message(data):
+    # test valid json
     try:
-        # If 'data' is a JSON string, convert it to a dictionary
         data_dict = json.loads(data)
     except json.JSONDecodeError:
-        # If 'data' is not a valid JSON string, handle the error
+
         print("Received data is not in JSON format:", data)
         return "Invalid data format"
-
-    # Now you can safely use the get method on the dictionary
-    user_email_or_username = data_dict.get("email_or_username")
-    user = User.query.filter_by(email=user_email_or_username).first()  # or username
-    if current_user.is_authenticated:
-
-        drug = DrugSchedule.query.filter_by(user_id=current_user.id).all()
-        socketio.emit('drug', {'message': str(drug)})
-    if user:
-        login_user(user)
-        socketio.emit('message', {'message': 'User logged in'})
+    type = data_dict['type']
+    if not current_user.is_authenticated:
+        if type == "login":
+            global android_username
+            android_username = socket_login(data_dict['data'])
     else:
-        socketio.emit('message', {'message': 'User not found'})
+        current_android_username = Elderlyuser.query.filter_by(username=android_username).first()
+        return current_android_username.id
 
-    return "Message processed!"
 
+
+
+
+def socket_login(data_dict):
+    user_username = data_dict["username"]
+    user_password = data_dict["password"]
+    user = Elderlyuser.query.filter_by(username=user_username).first()
+    if user:
+        if bcrypt.check_password_hash(user.password, user_password):
+            login_user(user)
+            socketio.emit('message', {'message': 'User logged in'})
+        else:
+            socketio.emit('message', {'error': 'Wrong password'})
+    else:
+        socketio.emit('message', {'error': 'User not found'})
+
+    return user.username
 # @socketio.on('message')
 # def message(data):
 #     try:

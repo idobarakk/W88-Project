@@ -1,0 +1,7 @@
+Login
+
+{
+  "type": "login",
+  "data": {"username": "ruti", "password": "123456"}
+}
+
