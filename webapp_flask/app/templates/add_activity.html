@@ -1,11 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Add Activity</h1>
+    <h1>Edit Activity</h1>
         <div class="content-section">
             <form method="post" action="">
                 {{ form.hidden_tag() }}
                 <fieldset class="form-group">
-                    <legend class="border-bottom mb-4"> Add Activity</legend>
                     <div class="form-group">
                         {{ form.eldrly.label(class="form-control-label") }}
                         {{ form.eldrly(class="form-control form-control-lg") }}

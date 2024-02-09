@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3180463-6dad-48bd-9f0d-8f9c6e654c20" name="Changes" comment="first json login message" />
+    <list default="true" id="f3180463-6dad-48bd-9f0d-8f9c6e654c20" name="Changes" comment="first json login message">
+      <change beforePath="$PROJECT_DIR$/../git.exe.stackdump" beforeDir="false" afterPath="$PROJECT_DIR$/../git.exe.stackdump" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/activities.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/activities.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/add_activity.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/add_activity.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instance/site.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/site.db" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -78,6 +86,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/routes.py</url>
+          <line>312</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">

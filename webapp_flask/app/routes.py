@@ -206,13 +206,26 @@ def register():
         user = User(username=form.username.data,email=form.email.data,password=hased_pw)
         db.session.add(user)
         db.session.commit()
+        db.session.refresh(user)
+
         elderly_user = Elderlyuser(username=form.elderlyusername.data, password=elderly_hased_pw, user_id=user.id)
         db.session.add(elderly_user)
         db.session.commit()
+        db.session.refresh(elderly_user)
         if form.elderlypassword.data:
             elderly2_hased_pw = bcrypt.generate_password_hash(form.elderlypassword2.data).decode('utf-8')
             elderly_user2 = Elderlyuser(username=form.elderlyusername2.data, password=elderly2_hased_pw, user_id=user.id)
             db.session.add(elderly_user2)
+            db.session.commit()
+            db.session.refresh(elderly_user2)
+
+        eldelys = Elderlyuser.query.filter_by(user_id=user.id)
+        eldelys_list = [i.id for i in eldelys]
+        for elderly_id in eldelys_list:
+            for day in range(1,8,1):
+                activity = Activities(day=day, activity1=False, activity2=False, activity3=False,
+                                          user_id=user.id, elderly_user_id=elderly_id)
+                db.session.add(activity)
             db.session.commit()
         flash('Your account has been Created !','success')
         return redirect(url_for('login'))
@@ -292,18 +305,23 @@ def send_message():
 @app.route("/activities")
 @login_required
 def activities():
+
     if current_user.is_authenticated:
         activities = Activities.query.filter_by(user_id=current_user.id).order_by(Activities.day.asc())
-        d1 = Activities.query.filter_by(user_id=current_user.id, day=1).first()
-        d2 = Activities.query.filter_by(user_id=current_user.id, day=2).first()
-        d3 = Activities.query.filter_by(user_id=current_user.id, day=3).first()
-        d4 = Activities.query.filter_by(user_id=current_user.id, day=4).first()
-        d5 = Activities.query.filter_by(user_id=current_user.id, day=5).first()
-        d6 = Activities.query.filter_by(user_id=current_user.id, day=6).first()
-        d7 = Activities.query.filter_by(user_id=current_user.id, day=7).first()
+        eldelys = Elderlyuser.query.filter_by(user_id=current_user.id)
+        eldelys_dict = {i.id: i.username for i in eldelys}
+        eldely_activities = {}
+        for el_id in eldelys_dict.keys():
+            d1 = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=el_id, day=1).first()
+            d2 = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=el_id, day=2).first()
+            d3 = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=el_id, day=3).first()
+            d4 = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=el_id, day=4).first()
+            d5 = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=el_id, day=5).first()
+            d6 = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=el_id, day=6).first()
+            d7 = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=el_id, day=7).first()
+            eldely_activities[el_id] = {'d1':d1,'d2':d2,'d3':d3,'d4':d4,'d5':d5,'d6':d6,'d7':d7}
 
-
-        return render_template("activities.html",activities=activities, title="activities",d1=d1,d2=d2,d3=d3,d4=d4,d5=d5,d6=d6,d7=d7)
+        return render_template("activities.html", title="activities",eldely_activities=eldely_activities,eldelys_dict=eldelys_dict)
     else:
         return render_template("home.html")
     
