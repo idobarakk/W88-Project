@@ -334,31 +334,52 @@ def add_activity():
     eldelys_list = [(i.id, i.username) for i in eldelys]
     form = AddActivityForm()
     form.eldrly.choices = eldelys_list
+
     if form.validate_on_submit():
-        activity = Activities(day=1,activity1=form.a1d1.data,activity2=form.a2d1.data,activity3=form.a3d1.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
-        db.session.add(activity)
+        activity = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=form.eldrly.data,day=1).first()
+        activity.activity1 = form.a1d1.data
+        activity.activity2 = form.a2d1.data
+        activity.activity3 = form.a3d1.data
+        db.session.commit()
 
-        activity = Activities(day=2,activity1=form.a1d2.data,activity2=form.a2d2.data,activity3=form.a3d2.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
-        db.session.add(activity)
+        activity = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=form.eldrly.data,day=2).first()
+        activity.activity1 = form.a1d2.data
+        activity.activity2 = form.a2d2.data
+        activity.activity3 = form.a3d2.data
+        db.session.commit()
 
-        activity = Activities(day=3,activity1=form.a1d3.data,activity2=form.a2d3.data,activity3=form.a3d3.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
-        db.session.add(activity)
+        activity = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=form.eldrly.data,day=3).first()
+        activity.activity1 = form.a1d3.data
+        activity.activity2 = form.a2d3.data
+        activity.activity3 = form.a3d3.data
+        db.session.commit()
 
-        activity = Activities(day=4,activity1=form.a1d4.data,activity2=form.a2d4.data,activity3=form.a3d4.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
-        db.session.add(activity)
+        activity = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=form.eldrly.data,day=4).first()
+        activity.activity1 = form.a1d4.data
+        activity.activity2 = form.a2d4.data
+        activity.activity3 = form.a3d4.data
+        db.session.commit()
 
-        activity = Activities(day=5,activity1=form.a1d5.data,activity2=form.a2d5.data,activity3=form.a3d5.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
-        db.session.add(activity)
+        activity = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=form.eldrly.data,day=5).first()
+        activity.activity1 = form.a1d5.data
+        activity.activity2 = form.a2d5.data
+        activity.activity3 = form.a3d5.data
+        db.session.commit()
 
-        activity = Activities(day=6,activity1=form.a1d6.data,activity2=form.a2d6.data,activity3=form.a3d6.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
-        db.session.add(activity)
+        activity = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=form.eldrly.data,day=6).first()
+        activity.activity1 = form.a1d6.data
+        activity.activity2 = form.a2d6.data
+        activity.activity3 = form.a3d6.data
+        db.session.commit()
 
-        activity = Activities(day=7,activity1=form.a1d7.data,activity2=form.a2d7.data,activity3=form.a3d7.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
-        db.session.add(activity)
+        activity = Activities.query.filter_by(user_id=current_user.id,elderly_user_id=form.eldrly.data,day=7).first()
+        activity.activity1 = form.a1d7.data
+        activity.activity2 = form.a2d7.data
+        activity.activity3 = form.a3d7.data
         db.session.commit()
         flash('Your Activity has been added !', 'success')
         return redirect(url_for('activities'))
-    return render_template("add_activity.html", title="Add Activity", form=form)
+    return render_template("add_activity.html", title="Edit Activity", form=form)
 
 
 # @socketio.on('message')
