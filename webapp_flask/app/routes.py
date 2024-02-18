@@ -431,16 +431,3 @@ def socket_login(data_dict):
         socketio.emit('message', {'error': 'User not found'})
 
     return user.username
-# @socketio.on('message')
-# def message(data):
-#     try:
-#         # If 'data' is a JSON string, convert it to a dictionary
-#         data_dict = json.loads(data)
-#     except json.JSONDecodeError:
-#         # If 'data' is not a valid JSON string, handle the error
-#         print("Received data is not in JSON format:", data)
-#         return "Invalid data format"
-#
-#     print(data)
-#     socketio.emit('stam', data)
-#     return data
