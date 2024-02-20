@@ -1,7 +1,23 @@
+Server -> cilent 
+
 Login
 
 {
   "type": "login",
-  "data": {"username": "ruti", "password": "123456"}
+  "data": {
+		"username": "ruti", 
+		"password": "123456"
+		}
 }
 
+
+
+
+cilent ->  Server
+
+{	
+	"type":"login_callback",
+	"data":{"user_id":"2",
+			"validpass":true,
+			"validuser":true}
+}

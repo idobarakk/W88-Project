@@ -405,14 +405,13 @@ def message(data):
         print("Received data is not in JSON format:", data)
         return "Invalid data format"
     type = data_dict['type']
-    if not current_user.is_authenticated:
-        if type == "login":
-            global android_username
-            android_username = socket_login(data_dict['data'])
-    else:
-        current_android_username = Elderlyuser.query.filter_by(username=android_username).first()
-        return current_android_username.id
-
+    #if not current_user.is_authenticated:
+    if type == "login":
+        global android_username_id
+        android_username_id = socket_login(data_dict['data'])
+    if type == "notification_callback":
+        notification = Notification.query.filter_by(elderly_user_id=data_dict['data']['user_id']).first()
+        socketio.emit('notification_callback', {'type': 'notification_callback','data':str(notification)})
 
 
 
@@ -424,10 +423,10 @@ def socket_login(data_dict):
     if user:
         if bcrypt.check_password_hash(user.password, user_password):
             login_user(user)
-            socketio.emit('message', {'message': 'User logged in'})
+            socketio.emit('login_callback', {'type': 'login_callback','data':{'user_id':str(user.id),'validpass':True,'validuser':True}})
         else:
-            socketio.emit('message', {'error': 'Wrong password'})
+            socketio.emit('login_callback', {'type': 'login_callback','data':{'user_id':None,'validpass':False,'validuser':True}})
     else:
-        socketio.emit('message', {'error': 'User not found'})
+        socketio.emit('login_callback', {'type': 'login_callback','data':{'user_id':None,'validpass':True,'validuser':False}})
 
-    return user.username
+    return user.id
