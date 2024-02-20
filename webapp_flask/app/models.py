@@ -40,6 +40,7 @@ class Notification(db.Model):
     content = db.Column(db.Text,nullable=False)
     date = db.Column(db.Date,nullable=False)
     time = db.Column(db.Time,nullable=False)
+    took = db.Column(db.Boolean, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     elderly_user_id = db.Column(db.Integer, db.ForeignKey('elderlyuser.id'), nullable=False)
 

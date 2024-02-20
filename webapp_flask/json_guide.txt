@@ -10,6 +10,18 @@ Login
 		}
 }
 
+{
+  "type": "notification",
+  "data": { "notification_id": "2",
+			"title": "2",
+			"content" :"text",
+			"date":"2025-12-01",
+			"time":"10-10",
+			"user_id":"1",
+			"elderly_user_id":"1",
+			"took":"false"
+			}
+}
 
 
 
@@ -20,4 +32,19 @@ cilent ->  Server
 	"data":{"user_id":"2",
 			"validpass":true,
 			"validuser":true}
+}
+
+
+
+{
+  "type": "notification_callback",
+  "data": { "notification_id": "1",
+			"title": "2",
+			"content" :"text",
+			"date":"2025-12-01",
+			"time":"10-10",
+			"user_id":"1",
+			"elderly_user_id":"1",
+			"took":"True"
+			}
 }

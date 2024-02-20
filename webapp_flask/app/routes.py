@@ -159,7 +159,7 @@ def add_notification():
     form = AddNotificationForm()
     form.eldrly.choices = eldelys_list
     if form.validate_on_submit():
-        notification = Notification(title=form.title.data,content=form.content.data,date=form.date.data,time=form.time.data,user_id=current_user.id,elderly_user_id=form.eldrly.data)
+        notification = Notification(title=form.title.data,content=form.content.data,date=form.date.data,time=form.time.data,user_id=current_user.id,elderly_user_id=form.eldrly.data,took=False)
         db.session.add(notification)
         db.session.commit()
         flash('Your Notification has been added !','success')
@@ -410,8 +410,10 @@ def message(data):
         global android_username_id
         android_username_id = socket_login(data_dict['data'])
     if type == "notification_callback":
-        notification = Notification.query.filter_by(elderly_user_id=data_dict['data']['user_id']).first()
-        socketio.emit('notification_callback', {'type': 'notification_callback','data':str(notification)})
+        notification = Notification.query.filter_by(id=data_dict['data']['notification_id']).first()
+        notification.took = True
+        db.session.commit()
+        socketio.emit('notification_callback', {'type':'notification_callback','data':'took True'})
 
 
 

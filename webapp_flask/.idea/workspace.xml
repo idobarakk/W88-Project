@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f3180463-6dad-48bd-9f0d-8f9c6e654c20" name="Changes" comment="first json login message">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/notification.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/notification.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/instance/site.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/site.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/json_guide.txt" beforeDir="false" afterPath="$PROJECT_DIR$/json_guide.txt" afterDir="false" />
     </list>
