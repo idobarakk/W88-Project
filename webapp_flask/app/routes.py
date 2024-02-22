@@ -12,6 +12,7 @@ import json
 
 
 
+
 #pages and website logic
 @app.route("/")
 @app.route("/home")
@@ -81,7 +82,19 @@ def add_drug():
     form = AddDrugForm()
     form.eldrly.choices = eldelys_list
     if form.validate_on_submit():
-        drug = Drug(name=form.name.data,type=form.type.data,dose=form.dose.data,timesaday=form.timesaday.data,daystotake=form.daystotake.data,user_id=current_user.id,startdate=form.startdate.data,packsize=form.packsize.data,gap=form.gap.data,taketime=form.taketime.data,elderly_user_id=form.eldrly.data)
+        #create new class for drugAPI using the form.name.data
+        #call function that warning as text
+        #add the text to the drug in line 87
+        current_drug = DrugAPI(form.name.data)
+        jason  = current_drug.check_fda_approval(current_drug.drug_name)
+        first_result = jason.get('results', [])[0] if 'results' in jason else {}
+        warnings = first_result.get('warnings', 'No FDA warnings available')
+
+
+
+
+        print("hi")
+        drug = Drug(name=form.name.data,type=form.type.data,dose=form.dose.data,timesaday=form.timesaday.data,daystotake=form.daystotake.data,user_id=current_user.id,startdate=form.startdate.data,packsize=form.packsize.data,gap=form.gap.data,taketime=form.taketime.data,elderly_user_id=form.eldrly.data,warnings=warnings)
         db.session.add(drug)
         db.session.commit()
         drug = Drug.query.filter_by(user_id=current_user.id).order_by(Drug.id.desc()).first()
@@ -184,6 +197,7 @@ def api():
     data = request.json
     if not data:
         return "no data sent"
+
     return [data,data]
 
 
