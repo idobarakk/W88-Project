@@ -87,10 +87,11 @@ def add_drug():
         #add the text to the drug in line 87
         current_drug = DrugAPI(form.name.data)
         jason  = current_drug.check_fda_approval(current_drug.drug_name)
-        first_result = jason.get('results', [])[0] if 'results' in jason else {}
-        warnings = first_result.get('warnings', 'No FDA warnings available')
 
 
+        warnings_list = jason['results'][0]['warnings']
+
+        warnings = '\n'.join(warnings_list)
 
 
         print("hi")

@@ -61,7 +61,7 @@ class Drug(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     elderly_user_id = db.Column(db.Integer, db.ForeignKey('elderlyuser.id'), nullable=False)
     drugschedules = db.relationship("DrugSchedule", cascade="all, delete")
-    warnings = db.Column(db.Text)
+    warnings = db.Column(db.String)
 
     def __repr__(self):
         return f"Drug('{self.name}','{self.type}','{self.dose}','{self.daystotake}','{self.packsize}')"
