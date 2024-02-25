@@ -40,12 +40,20 @@
                         <big class="text-muted">{{ drug.startdate.strftime('%Y-%m-%d') }} </big>
                     </div>
                     <h2>{{ drug.name }}</h2>
-                     <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="{{drug.warnings}}">
-                        warnings
+                    <p>
+                     <button class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Warnings
                      </button>
+                    </p>
+                    <div class="collapse" id="collapseExample" >
+                      <div class="card card-body">
+                        {{drug.warnings}}
+                      </div>
+                    </div>
+
                     
                     <p class="article-content"></p>
-                        <
+
                         <strong>Type: </strong> {{ drug.type }}&nbsp; &nbsp; &nbsp; &nbsp;
                        <strong>Start date:</strong> {{ drug.startdate.strftime('%d-%m-%y') }} &nbsp; &nbsp; &nbsp; &nbsp;
                         <strong>Pack size:</strong> {{ drug.packsize }} &nbsp; &nbsp; &nbsp; &nbsp;

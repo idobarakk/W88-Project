@@ -93,8 +93,6 @@ def add_drug():
 
         warnings = '\n'.join(warnings_list)
 
-
-        print("hi")
         drug = Drug(name=form.name.data,type=form.type.data,dose=form.dose.data,timesaday=form.timesaday.data,daystotake=form.daystotake.data,user_id=current_user.id,startdate=form.startdate.data,packsize=form.packsize.data,gap=form.gap.data,taketime=form.taketime.data,elderly_user_id=form.eldrly.data,warnings=warnings)
         db.session.add(drug)
         db.session.commit()
@@ -429,21 +427,31 @@ def message(data):
         notification.took = True
         db.session.commit()
         socketio.emit('notification_callback', {'type':'notification_callback','data':'took True'})
-
-
+    if type == "drugschedule_callback":
+        drugschedule = DrugSchedule.query.filter_by(id=data_dict['data']['DrugSchedule_id']).first()
+        drugschedule.took = True
+        db.session.commit()
+        socketio.emit('drugschedule_callback', {'type':'notification_callback','data':'took True'})
+    else:
+        socketio.emit('message',data)
 
 
 def socket_login(data_dict):
     user_username = data_dict["username"]
     user_password = data_dict["password"]
     user = Elderlyuser.query.filter_by(username=user_username).first()
+
     if user:
         if bcrypt.check_password_hash(user.password, user_password):
             login_user(user)
-            socketio.emit('login_callback', {'type': 'login_callback','data':{'user_id':str(user.id),'validpass':True,'validuser':True}})
+            #login_response = json.dump({'type': 'login_callback','data':{'user_id':str(user.id),'validpass':True,'validuser':True}})
+            socketio.emit('message', {'type': 'login_callback','data':{'user_id':str(user.id),'validpass':True,'validuser':True}})
         else:
-            socketio.emit('login_callback', {'type': 'login_callback','data':{'user_id':None,'validpass':False,'validuser':True}})
+            #login_response = json.dump({'type': 'login_callback','data':{'user_id':None,'validpass':False,'validuser':True}})
+            socketio.emit('message', {'type': 'login_callback','data':{'user_id':None,'validpass':False,'validuser':True}})
     else:
-        socketio.emit('login_callback', {'type': 'login_callback','data':{'user_id':None,'validpass':True,'validuser':False}})
+        #login_response = json.dump({'type': 'login_callback','data':{'user_id':None,'validpass':True,'validuser':False}})
+        socketio.emit('message', {'type': 'login_callback','data':{'user_id':None,'validpass':True,'validuser':False}})
 
+    #socketio.emit('message',login_response)
     return user.id
