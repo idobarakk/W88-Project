@@ -20,6 +20,7 @@ admin = Admin(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category ='info'
+#,  message_queue='redis://localhost:6379'
 socketio = SocketIO(app,logger=True, engineio_logger=True)
 
 

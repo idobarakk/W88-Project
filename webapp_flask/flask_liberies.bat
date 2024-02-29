@@ -12,3 +12,4 @@ pip install --upgrade Flask-SocketIO
 pip install requests
 pip install email_validator
 pip install pytz
+pip install redis
