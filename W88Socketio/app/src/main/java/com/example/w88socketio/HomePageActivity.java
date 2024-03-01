@@ -31,8 +31,18 @@ public class HomePageActivity extends AppCompatActivity {
         buttonAction2 = findViewById(R.id.buttonAction2);
 
         try {
-            mSocket = IO.socket("http://10.0.2.2:5000");
+            IO.Options opts = new IO.Options();
+            opts.reconnection = true;
+            opts.reconnectionAttempts = 10;
+            opts.reconnectionDelay = 1000; // 1 second
+
+            mSocket = IO.socket("http://10.0.2.2:5000", opts);
             mSocket.connect();
+
+            mSocket.on(Socket.EVENT_CONNECT, args -> Log.d("SocketIO", "Connected"));
+            mSocket.on(Socket.EVENT_DISCONNECT, args -> Log.d("SocketIO", "Disconnected"));
+            mSocket.on(Socket.EVENT_CONNECT_ERROR, args -> Log.e("SocketIO", "Connect Error", (Throwable) args[0]));
+
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

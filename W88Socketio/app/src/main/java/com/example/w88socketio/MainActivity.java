@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             opts.reconnectionAttempts = 10;
             opts.reconnectionDelay = 1000; // 1 second
 
-            mSocket = IO.socket("http://192.116.98.97:5000", opts);
+            mSocket = IO.socket("http://10.0.2.2:5000", opts);
             mSocket.connect();
 
             mSocket.on(Socket.EVENT_CONNECT, args -> Log.d("SocketIO", "Connected"));
