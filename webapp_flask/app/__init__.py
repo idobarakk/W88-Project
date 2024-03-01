@@ -5,6 +5,10 @@ from flask_login import LoginManager
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_socketio import SocketIO
+from apscheduler.schedulers.background import BackgroundScheduler
+from datetime import timedelta,datetime,time
+import pytz
+import atexit
 
 #Create our TakeCare App
 app = Flask(__name__)
@@ -20,8 +24,10 @@ admin = Admin(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category ='info'
-#,  message_queue='redis://localhost:6379'
+
+#,  message_queue='redis://localhost:6379'  add when ruuning on server
 socketio = SocketIO(app,logger=True, engineio_logger=True)
+scheduler = BackgroundScheduler()
 
 
 from app import models
@@ -43,3 +49,4 @@ with app.app_context() as ctx:
     db.create_all()
 
 from app import routes
+

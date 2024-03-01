@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField
 from flask_login import current_user
 from wtforms import SelectField , StringField,PasswordField,SubmitField, BooleanField, IntegerField, DateTimeField, DateField, TimeField, TextAreaField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError,Optional
 from app.models import User, Elderlyuser
 from app.drugapi import DrugAPI
 
@@ -19,9 +19,9 @@ class RegistrationForm(FlaskForm):
     elderlyusername = StringField('Username',validators=[DataRequired(),Length(min=2,max=20) ])
     elderlypassword = PasswordField('Password', validators=[DataRequired()])
     elderlyconfirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('elderlypassword')])
-    elderlyusername2 = StringField('Username #2', validators=[Length(min=2, max=20)])
-    elderlypassword2 = PasswordField('Password ')
-    elderlyconfirm_password2 = PasswordField('Confirm Password', validators=[EqualTo('elderlypassword2')])
+    elderlyusername2 = StringField('Username #2', validators=[Length(min=2, max=20),Optional()])
+    elderlypassword2 = PasswordField('Password ',validators=[Optional()])
+    elderlyconfirm_password2 = PasswordField('Confirm Password', validators=[EqualTo('elderlypassword2'),Optional()])
     submit = SubmitField('Sign Up')
 
     def validate_username (self,username):

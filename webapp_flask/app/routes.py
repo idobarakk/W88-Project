@@ -1,14 +1,18 @@
 import secrets
 import os
+import json
+import atexit
 from PIL import Image
 from flask import Flask, render_template, url_for,  flash, redirect, request,abort
 from app.models import User, Notification ,Drug, DrugSchedule,Activities,Elderlyuser
-from app import app, db, bcrypt ,socketio
+from app import app, db, bcrypt ,socketio,scheduler
 from app.forms import RegistrationForm, LoginForms ,UpdateAccountForm, AddNotificationForm ,AddDrugForm,AddActivityForm
 from flask_login import login_user, current_user ,logout_user,login_required
 from app.drugapi import DrugAPI
 from datetime import timedelta,datetime,time
-import json
+import pytz
+
+
 
 
 
@@ -214,8 +218,8 @@ def register():
     if form.validate_on_submit():
         hased_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         elderly_hased_pw = bcrypt.generate_password_hash(form.elderlypassword.data).decode('utf-8')
-        if form.elderlypassword.data:
-            elderly2_hased_pw = bcrypt.generate_password_hash(form.elderlypassword2.data).decode('utf-8')
+        #if form.elderlypassword.data:
+        #    elderly2_hased_pw = bcrypt.generate_password_hash(form.elderlypassword2.data).decode('utf-8')
         user = User(username=form.username.data,email=form.email.data,password=hased_pw)
         db.session.add(user)
         db.session.commit()
@@ -225,7 +229,7 @@ def register():
         db.session.add(elderly_user)
         db.session.commit()
         db.session.refresh(elderly_user)
-        if form.elderlypassword.data:
+        if form.elderlypassword2.data:
             elderly2_hased_pw = bcrypt.generate_password_hash(form.elderlypassword2.data).decode('utf-8')
             elderly_user2 = Elderlyuser(username=form.elderlyusername2.data, password=elderly2_hased_pw, user_id=user.id)
             db.session.add(elderly_user2)
@@ -431,7 +435,7 @@ def message(data):
         drugschedule = DrugSchedule.query.filter_by(id=data_dict['data']['DrugSchedule_id']).first()
         drugschedule.took = True
         db.session.commit()
-        socketio.emit('drugschedule_callback', {'type':'notification_callback','data':'took True'})
+        socketio.emit('messege', {'type':'info','data':str('took:'+ bool(data_dict['data']['took']))})
     else:
         socketio.emit('message',data)
 
@@ -455,3 +459,37 @@ def socket_login(data_dict):
 
     #socketio.emit('message',login_response)
     return user.id
+
+
+##listener##
+
+def check_notifications():
+    with app.app_context():
+        local_tz = pytz.timezone('Asia/Jerusalem')
+        current_datetime = datetime.now(local_tz)
+        current_date = current_datetime.date()
+        current_time = current_datetime.time()
+
+        notifications = Notification.query.filter(Notification.date <= current_date).all()
+
+
+        for notification in notifications:
+            if notification.date == current_date and notification.time <= current_time and not notification.took:
+                json = {
+                          "type": "notification",
+                          "data": { "notification_id": str(notification.id),
+                                    "title": str(notification.title),
+                                    "content" :str(notification.content),
+                                    "date":str(notification.date),
+                                    "time":str(notification.time),
+                                    "user_id":str(notification.user_id),
+                                    "elderly_user_id":str(notification.elderly_user_id),
+                                    "took":str(notification.took)
+                                    }
+                        }
+                socketio.emit('message',json)
+
+scheduler.add_job(func=check_notifications, trigger="interval", seconds=15)
+scheduler.start()
+
+atexit.register(lambda: scheduler.shutdown())
