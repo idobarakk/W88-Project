@@ -428,14 +428,14 @@ def message(data):
         android_username_id = socket_login(data_dict['data'])
     if type == "notification_callback":
         notification = Notification.query.filter_by(id=data_dict['data']['notification_id']).first()
-        notification.took = True
+        notification.took = ('true' == data_dict['data']['took'].lower())
         db.session.commit()
-        socketio.emit('notification_callback', {'type':'notification_callback','data':'took True'})
+        socketio.emit('messege', {'type':'info_notification','data':{'took':('true' == data_dict['data']['took'].lower())}})
     if type == "drugschedule_callback":
         drugschedule = DrugSchedule.query.filter_by(id=data_dict['data']['DrugSchedule_id']).first()
-        drugschedule.took = True
+        drugschedule.took = ('true' == data_dict['data']['took'].lower())
         db.session.commit()
-        socketio.emit('messege', {'type':'info','data':str('took:'+ bool(data_dict['data']['took']))})
+        socketio.emit('messege', {'type':'info_drug','data':{'took':('true' == data_dict['data']['took'].lower())}})
     else:
         socketio.emit('message',data)
 
@@ -489,7 +489,58 @@ def check_notifications():
                         }
                 socketio.emit('message',json)
 
+
+def check_drugs():
+    with app.app_context():
+        local_tz = pytz.timezone('Asia/Jerusalem')
+        current_datetime = datetime.now(local_tz)
+        current_date = current_datetime.date()
+        current_time = current_datetime.time()
+        drugschedules = DrugSchedule.query.filter(DrugSchedule.takedate == current_date).all()
+
+
+        for drugschedule in drugschedules:
+            if drugschedule.takedate == current_date and drugschedule.taketime <= current_time and not drugschedule.took:
+                json ={
+                          "type": "drugschedule",
+                          "data": { "DrugSchedule_id": str(drugschedule.id),
+                                    "takedate":str(drugschedule.takedate),
+                                    "taketime":str(drugschedule.taketime),
+                                    "drug_id":str(drugschedule.drug_id),
+                                    "user_id":str(drugschedule.user_id),
+                                    "elderly_user_id":str(drugschedule.elderly_user_id),
+                                    "took":str(drugschedule.took)
+                                    }
+                        }
+                socketio.emit('message',json)
+
+def check_activity():
+    with app.app_context():
+        local_tz = pytz.timezone('Asia/Jerusalem')
+        current_datetime = datetime.now(local_tz)
+        current_week_day = current_datetime.date().weekday()
+        #current_time = current_datetime.time()
+        activities = Activities.query.filter(Activities.day == current_week_day).all()
+
+
+        for activitie in activities:
+            if activitie.day == current_week_day:
+                json ={
+                        "type": "activitiy",
+                        "data": {"activitiy_id": str(activitie.id),
+                                 "day": str(activitie.day),
+                                 "activity1": str(activitie.activity1),
+                                 "activity2": str(activitie.activity2),
+                                 "activity3": str(activitie.activity3),
+                                 "user_id": str(activitie.user_id),
+                                 "elderly_user_id": str(activitie.elderly_user_id)
+                                 }
+                    }
+                socketio.emit('message',json)
+
 scheduler.add_job(func=check_notifications, trigger="interval", seconds=15)
+scheduler.add_job(func=check_drugs, trigger="interval", seconds=15)
+scheduler.add_job(func=check_activity, trigger="interval", seconds=15)
 scheduler.start()
 
 atexit.register(lambda: scheduler.shutdown())
