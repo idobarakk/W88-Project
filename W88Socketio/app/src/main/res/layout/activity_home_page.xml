@@ -1,25 +1,107 @@
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:weightSum="8"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/notificationTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Notification Details"/>
-
-    <Button
-        android:id="@+id/buttonAction1"
+    <!-- Notifications Section -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Action 1"/>
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@drawable/layout_border">
 
-    <Button
-        android:id="@+id/buttonAction2"
+        <TextView
+            android:id="@+id/notificationTextViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:background="#cccccc"
+            android:gravity="center"
+            android:text="Notifications" />
+
+
+        <TextView
+            android:id="@+id/notificationTextView"
+            android:layout_width="match_parent"
+            android:layout_height="154dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/notificationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I did it!"
+            android:layout_gravity="center_horizontal|bottom"
+            android:visibility="invisible"
+            android:background="#E06969"/>
+    </FrameLayout>
+
+    <!-- Drugs Reminder Section -->
+
+    <!-- Activities Section -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Action 2"/>
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@drawable/layout_border">
+
+        <TextView
+            android:id="@+id/drugsTextViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:background="#cccccc"
+            android:gravity="center"
+            android:text="Drugs Alerts" />
+
+        <TextView
+            android:id="@+id/drugsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="154dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="invisible" />
+
+
+        <Button
+            android:id="@+id/drugsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:text="I Took the Drug!"
+            android:visibility="invisible"
+            android:background="#E06969"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.8"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/activityButton1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Activity 1"
+            android:enabled="false" />
+        <Button
+            android:id="@+id/activityButton2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Activity 2"
+            android:enabled="false" />
+        <Button
+            android:id="@+id/activityButton3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Activity 3"
+            android:enabled="false" />
+    </LinearLayout>
+
 </LinearLayout>

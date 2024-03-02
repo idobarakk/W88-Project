@@ -1,7 +1,7 @@
 package com.example.w88socketio;
 
 public class GlobalData {
-    private static String userId;
+    static String userId;
 
     public static String getUserId() {
         return userId;
