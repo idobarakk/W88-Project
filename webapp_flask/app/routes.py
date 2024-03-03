@@ -450,6 +450,7 @@ def socket_login(data_dict):
             login_user(user)
             #login_response = json.dump({'type': 'login_callback','data':{'user_id':str(user.id),'validpass':True,'validuser':True}})
             socketio.emit('message', {'type': 'login_callback','data':{'user_id':str(user.id),'validpass':True,'validuser':True}})
+            check_activity()
         else:
             #login_response = json.dump({'type': 'login_callback','data':{'user_id':None,'validpass':False,'validuser':True}})
             socketio.emit('message', {'type': 'login_callback','data':{'user_id':None,'validpass':False,'validuser':True}})
@@ -500,6 +501,7 @@ def check_drugs():
 
 
         for drugschedule in drugschedules:
+            drugsinfo = Drug.query.filter_by(id=drugschedule.drug_id).first()
             if drugschedule.takedate == current_date and drugschedule.taketime <= current_time and not drugschedule.took:
                 json ={
                           "type": "drugschedule",
@@ -509,7 +511,10 @@ def check_drugs():
                                     "drug_id":str(drugschedule.drug_id),
                                     "user_id":str(drugschedule.user_id),
                                     "elderly_user_id":str(drugschedule.elderly_user_id),
-                                    "took":str(drugschedule.took)
+                                    "took":str(drugschedule.took),
+                                    "drug_name":str(drugsinfo.name),
+                                    "dose":str(drugsinfo.dose),
+                                    "type":str(drugsinfo.type)
                                     }
                         }
                 socketio.emit('message',json)
@@ -541,7 +546,7 @@ def check_activity():
 
 scheduler.add_job(func=check_notifications, trigger="interval", seconds=15)
 scheduler.add_job(func=check_drugs, trigger="interval", seconds=15)
-scheduler.add_job(func=check_activity, trigger="interval", seconds=15)
+scheduler.add_job(func=check_activity, trigger="interval", seconds=60)
 scheduler.start()
 
 atexit.register(lambda: scheduler.shutdown())

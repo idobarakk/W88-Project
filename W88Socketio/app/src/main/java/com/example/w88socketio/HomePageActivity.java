@@ -96,13 +96,25 @@ public class HomePageActivity extends AppCompatActivity {
                 }
                 String type = data.getString("type");
                 if ("notification".equals(type)) {
-                    handleNotification(data.getJSONObject("data"));
+                    JSONObject notificationData = data.getJSONObject("data");
+                    String notificationUserID = notificationData.optString("elderly_user_id");
+                    if(notificationUserID.equals(userId)){
+                        handleNotification(data.getJSONObject("data"));
+                    }
                 }
                 else if ("drugschedule".equals(type)) {
-                    handleDrugSchedule(data.getJSONObject("data"));
+                    JSONObject drugData = data.getJSONObject("data");
+                    String drugUserID = drugData.optString("elderly_user_id");
+                    if(drugUserID.equals(userId)) {
+                        handleDrugSchedule(data.getJSONObject("data"));
+                    }
                 }
                 else if ("activitiy".equals(type)) {
-                    handleActivitiy(data.getJSONObject("data"));
+                    JSONObject activitiyData = data.getJSONObject("data");
+                    String activitiyUserID = activitiyData.optString("elderly_user_id");
+                    if(activitiyUserID.equals(userId)){
+                        handleActivitiy(data.getJSONObject("data"));
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -122,7 +134,16 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void handleNotification(JSONObject data) {
-        notificationTextView.setText("here notification id "+userId);
+
+        String notification_id = data.optString("notification_id");
+        String title = data.optString("title");
+        String content = data.optString("content");
+        String date = data.optString("date");
+        String time = data.optString("time");
+        String user_id = data.optString("user_id");
+        String elderly_user_id = data.optString("elderly_user_id");
+        boolean took = data.optBoolean("took");
+        notificationTextView.setText("Title: "+ title +"\n"+"Content: "+ content +"\n"+"Date and Time : "+ date + " " + time);
         notificationButton.setEnabled(true);
         notificationTextView.setVisibility(View.VISIBLE);
         notificationButton.setVisibility(View.VISIBLE);
@@ -130,7 +151,18 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void handleDrugSchedule(JSONObject data) {
-        drugsTextView.setText("here drug id "+userId);
+        String DrugSchedule_id = data.optString("DrugSchedule_id");
+        String taketime = data.optString("taketime");
+        String takedate = data.optString("takedate");
+        String drug_id = data.optString("drug_id");
+        String user_id = data.optString("user_id");
+        String dose = data.optString("dose");
+        String type = data.optString("type");
+        String elderly_user_id = data.optString("elderly_user_id");
+        String drug_name = data.optString("drug_name");
+        boolean took = data.optBoolean("took");
+
+        drugsTextView.setText("Drug Name: "+ drug_name +"\n"+"Dose: "+ dose +"\n"+"Type : "+ type + "Date and Time: " + taketime +"   "+takedate);
         drugsButton.setEnabled(true);
         drugsTextView.setVisibility(View.VISIBLE);
         drugsButton.setVisibility(View.VISIBLE);

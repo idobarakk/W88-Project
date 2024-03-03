@@ -19,7 +19,7 @@
             android:id="@+id/notificationTextViewTitle"
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:background="#cccccc"
+            android:background="#919EE4"
             android:gravity="center"
             android:text="Notifications" />
 
@@ -33,7 +33,7 @@
 
         <Button
             android:id="@+id/notificationButton"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="I did it!"
             android:layout_gravity="center_horizontal|bottom"
@@ -54,7 +54,7 @@
             android:id="@+id/drugsTextViewTitle"
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:background="#cccccc"
+            android:background="#EDAEF8"
             android:gravity="center"
             android:text="Drugs Alerts" />
 
@@ -68,12 +68,12 @@
 
         <Button
             android:id="@+id/drugsButton"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
+            android:background="#E06969"
             android:text="I Took the Drug!"
-            android:visibility="invisible"
-            android:background="#E06969"/>
+            android:visibility="invisible" />
     </FrameLayout>
 
     <LinearLayout
