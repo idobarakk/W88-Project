@@ -515,16 +515,17 @@ def check_drugs():
                 socketio.emit('message',json)
 
 def check_activity():
+    local_weekday_dic = {6:1,0:2,1:3,2:4,3:5,4:6,5:7}
     with app.app_context():
         local_tz = pytz.timezone('Asia/Jerusalem')
         current_datetime = datetime.now(local_tz)
         current_week_day = current_datetime.date().weekday()
         #current_time = current_datetime.time()
-        activities = Activities.query.filter(Activities.day == current_week_day).all()
+        activities = Activities.query.filter(Activities.day == local_weekday_dic[current_week_day]).all()
 
 
         for activitie in activities:
-            if activitie.day == current_week_day:
+            if activitie.day == local_weekday_dic[current_week_day]:
                 json ={
                         "type": "activitiy",
                         "data": {"activitiy_id": str(activitie.id),
