@@ -31,7 +31,7 @@ class Elderlyuser(db.Model, UserMixin):
 
 
     def __repr__(self):
-        return f"ElderlyUser('{self.id}','{self.username}','{self.password}')"
+        return f"ElderlyUser('{self.id}','{self.username}')"
 
   
 class Notification(db.Model):

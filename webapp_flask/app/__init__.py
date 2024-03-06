@@ -37,11 +37,41 @@ from app import drugapi
 class NotificationView(ModelView):
     column_display_pk = True 
     column_hide_backrefs = False
-    column_list = ('id', 'title', 'content','date','time','user_id')
+    column_list = ('id', 'title', 'content','date','time','user_id','elderly_user_id','took')
+
+class UserView(ModelView):
+    column_display_pk = True
+    column_hide_backrefs = False
+    column_list = ('id', 'username', 'email','image_file','password','ElderlyUser','Notifications','Drugs')
 
 
-admin.add_view(ModelView(models.User, db.session))
+class ElderlyuserView(ModelView):
+    column_display_pk = True
+    column_hide_backrefs = False
+    column_list = ('id', 'username', 'password','user_id')
+
+
+class DrugView(ModelView):
+    column_display_pk = True
+    column_hide_backrefs = False
+    column_list = ('id', 'name', 'type','dose','timesaday','taketime','gap','packsize','daystotake','startdate','user_id','elderly_user_id','drugschedules','drugschedules')
+
+class DrugScheduleView(ModelView):
+    column_display_pk = True
+    column_hide_backrefs = False
+    column_list = ('id', 'takedate', 'taketime','took','user_id','drug_id','elderly_user_id')
+
+class ActivitiesView(ModelView):
+    column_display_pk = True
+    column_hide_backrefs = False
+    column_list = ('id', 'day', 'activity1','activity2','activity3','elderly_user_id')
+
+admin.add_view(UserView(models.User, db.session))
 admin.add_view(NotificationView(models.Notification, db.session))
+admin.add_view(ElderlyuserView(models.Elderlyuser, db.session))
+admin.add_view(DrugView(models.Drug, db.session))
+admin.add_view(DrugScheduleView(models.DrugSchedule, db.session))
+admin.add_view(ActivitiesView(models.Activities, db.session))
 
 ## one time creation
 with app.app_context() as ctx:
