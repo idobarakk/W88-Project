@@ -58,6 +58,7 @@ class Drug(db.Model):
     packsize = db.Column(db.Integer,nullable=False)
     daystotake = db.Column(db.Integer,nullable=False)
     startdate = db.Column(db.Date,nullable=False)
+    finish = db.Column(db.Boolean, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     elderly_user_id = db.Column(db.Integer, db.ForeignKey('elderlyuser.id'), nullable=False)
     drugschedules = db.relationship("DrugSchedule", cascade="all, delete")

@@ -54,7 +54,7 @@ class ElderlyuserView(ModelView):
 class DrugView(ModelView):
     column_display_pk = True
     column_hide_backrefs = False
-    column_list = ('id', 'name', 'type','dose','timesaday','taketime','gap','packsize','daystotake','startdate','user_id','elderly_user_id','drugschedules','drugschedules')
+    column_list = ('id', 'name', 'type','dose','timesaday','taketime','gap','packsize','daystotake','startdate','user_id','elderly_user_id','drugschedules','drugschedules','finish')
 
 class DrugScheduleView(ModelView):
     column_display_pk = True
