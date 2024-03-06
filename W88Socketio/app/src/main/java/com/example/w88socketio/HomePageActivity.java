@@ -46,7 +46,12 @@ public class HomePageActivity extends AppCompatActivity {
         setupSocketListeners();
 
         // Setup button click listeners
-        //setupButtonClickListeners();
+        setupButtonClickListeners();
+
+    }
+
+    private void setupButtonClickListeners() {
+
     }
 
     private void initializeUI() {
@@ -148,6 +153,28 @@ public class HomePageActivity extends AppCompatActivity {
         notificationTextView.setVisibility(View.VISIBLE);
         notificationButton.setVisibility(View.VISIBLE);
         ringtone();
+
+        notificationButton.setOnClickListener(v -> {
+            JSONObject notificationData = new JSONObject();
+            try {
+                notificationData.put("type", "notification_callback");
+                JSONObject senddata = new JSONObject();
+                senddata.put("notification_id", notification_id);
+                senddata.put("title", title);
+                senddata.put("content", content);
+                senddata.put("date", date);
+                senddata.put("time", time);
+                senddata.put("user_id", user_id);
+                senddata.put("elderly_user_id", elderly_user_id);
+                senddata.put("took", "true");
+                notificationData.put("data", senddata);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            mSocket.emit("message", notificationData.toString());
+            notificationTextView.setVisibility(View.INVISIBLE);
+            notificationButton.setVisibility(View.INVISIBLE);
+        });
     }
 
     private void handleDrugSchedule(JSONObject data) {
@@ -168,13 +195,46 @@ public class HomePageActivity extends AppCompatActivity {
         drugsButton.setVisibility(View.VISIBLE);
         ringtone();
 
+        drugsButton.setOnClickListener(v -> {
+            JSONObject drugData = new JSONObject();
+            try {
+                drugData.put("type", "drugschedule_callback");
+                JSONObject senddata = new JSONObject();
+                senddata.put("DrugSchedule_id", DrugSchedule_id);
+                senddata.put("takedate", takedate);
+                senddata.put("taketime", taketime);
+                senddata.put("drug_id", drug_id);
+                senddata.put("user_id", user_id);
+                senddata.put("elderly_user_id", elderly_user_id);
+                senddata.put("took", "true");
+                drugData.put("data", senddata);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            mSocket.emit("message", drugData.toString());
+            drugsTextView.setVisibility(View.INVISIBLE);
+            drugsButton.setVisibility(View.INVISIBLE);
+        });
     }
 
     private void handleActivitiy(JSONObject data) {
-        activityButton1.setEnabled(true);
-        activityButton2.setEnabled(true);
-        activityButton3.setEnabled(false);
-    }
 
-    // Additional methods for updating UI, handling navigation, etc.
+        boolean activity1 = data.optBoolean("activity1");
+        boolean activity2 = data.optBoolean("activity2");
+        boolean activity3 = data.optBoolean("activity3");
+
+        activityButton1.setEnabled(activity1);
+        activityButton2.setEnabled(activity2);
+        activityButton3.setEnabled(activity3);
+        activityButton1.setOnClickListener(v -> {
+            startActivity(new Intent(HomePageActivity.this, Activity1.class));
+        });
+        activityButton2.setOnClickListener(v -> {
+            startActivity(new Intent(HomePageActivity.this, Activity2.class));
+        });
+        activityButton3.setOnClickListener(v -> {
+            startActivity(new Intent(HomePageActivity.this, Activity3.class));
+        });
+
+    }
 }

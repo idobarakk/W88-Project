@@ -546,7 +546,7 @@ def check_activity():
 
 scheduler.add_job(func=check_notifications, trigger="interval", seconds=15)
 scheduler.add_job(func=check_drugs, trigger="interval", seconds=15)
-scheduler.add_job(func=check_activity, trigger="interval", seconds=60)
+scheduler.add_job(func=check_activity, trigger="interval", seconds=5)
 scheduler.start()
 
 atexit.register(lambda: scheduler.shutdown())

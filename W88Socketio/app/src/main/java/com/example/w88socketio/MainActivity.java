@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        usernameInput = findViewById(R.id.usernameInput); // Change ID as per your layout
-        passwordInput = findViewById(R.id.passwordInput); // Change ID as per your layout
+        usernameInput = findViewById(R.id.usernameInput);
+        passwordInput = findViewById(R.id.passwordInput);
         Button sendButton = findViewById(R.id.sendButton);
         responseView = findViewById(R.id.responseView);
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             IO.Options opts = new IO.Options();
             opts.reconnection = true;
             opts.reconnectionAttempts = 10;
-            opts.reconnectionDelay = 1000; // 1 second
+            opts.reconnectionDelay = 1000;
 
             mSocket = IO.socket("http://10.0.2.2:5000", opts);
             mSocket.connect();
