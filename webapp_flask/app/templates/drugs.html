@@ -46,25 +46,28 @@
 
                         </div>
                         <h2>{{ drug.name }}</h2>
-                        <p>
-                         <button class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            Warnings
-                         </button>
-                        </p>
-                        <div class="collapse" id="collapseExample" >
-                          <div class="card card-body scroll">
-                            {{drug.warnings}}
-                          </div>
-                        </div>
-
+                        {% if drug.warnings != "" %}
+                            <p>
+                             <button class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapseExample{{drug.id}}" role="button" aria-expanded="false" aria-controls="collapseExample{{drug.id}}">
+                                FDA Warnings
+                             </button>
+                            </p>
+                            <div class="collapse" id="collapseExample{{drug.id}}" >
+                              <div class="card card-body scroll">
+                                {{drug.warnings}}
+                              </div>
+                            </div>
+                        {% endif %}
 
                         <p class="article-content"></p>
 
                             <strong>Type: </strong> {{ drug.type }}&nbsp; &nbsp; &nbsp; &nbsp;
-                           <strong>Start date:</strong> {{ drug.startdate.strftime('%d-%m-%y') }} &nbsp; &nbsp; &nbsp; &nbsp;
+                            <strong>Start date:</strong> {{ drug.startdate.strftime('%d-%m-%y') }} &nbsp; &nbsp; &nbsp; &nbsp;
                             <strong>Pack size:</strong> {{ drug.packsize }} &nbsp; &nbsp; &nbsp; &nbsp;
-                           <strong> Dose: </strong>{{ drug.dose }} &nbsp; &nbsp; &nbsp; &nbsp;
-                            <strong>Times a day: </strong>{{ drug.timesaday }} &nbsp;
+                            <strong> Dose: </strong>{{ drug.dose }} &nbsp; &nbsp; &nbsp; &nbsp;
+                            <strong>Times a day: </strong>{{ drug.timesaday }}
+
+
                         </p>
                         <div class="progress">
                             <div class="progress-bar bg-info" role="progressbar" style="width: {{ percentage }}%;" aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100">{{ percentage }}%</div>
@@ -148,16 +151,18 @@
                             <big class="text-muted">{{ drug.startdate.strftime('%Y-%m-%d') }} </big>
                         </div>
                         <h2>{{ drug.name }}</h2>
-                        <p>
-                         <button class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            Warnings
-                         </button>
-                        </p>
-                        <div class="collapse" id="collapseExample" >
-                          <div class="card card-body scroll">
-                            {{drug.warnings}}
-                          </div>
-                        </div>
+                        {% if drug.warnings != "" %}
+                            <p>
+                             <button class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapseExample{{drug.id}}" role="button" aria-expanded="false" aria-controls="collapseExample{{drug.id}}">
+                                FDA Warnings
+                             </button>
+                            </p>
+                            <div class="collapse" id="collapseExample{{drug.id}}" >
+                              <div class="card card-body scroll">
+                                {{drug.warnings}}
+                              </div>
+                            </div>
+                        {% endif %}
 
 
                         <p class="article-content"></p>

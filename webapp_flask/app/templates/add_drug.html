@@ -10,6 +10,7 @@
                         {{ form.eldrly.label(class="form-control-label") }}
                         {{ form.eldrly(class="form-control form-control-lg") }}
                     </div>
+                    <fieldset class="border p-2 form-group">
                     <div class="form-group">
                         {{ form.name.label(class="form-control-label") }}
                         {% if form.name.errors %}
@@ -23,7 +24,11 @@
                             {{ form.name(class="form-control form-control-lg") }}
                         {% endif %}
                     </div>
-
+                     <div class="form-group">
+                         {{ form.fdawarnning.label(class="form-control-label") }}
+                         {{ form.fdawarnning(class="form-control col-sm-1") }}
+                     </div>
+                    </fieldset>
                     <div class="form-group">
                         {{ form.type.label(class="form-control-label") }}
                         {% if form.type.errors %}

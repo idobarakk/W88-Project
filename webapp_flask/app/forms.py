@@ -107,9 +107,11 @@ class AddNotificationForm(FlaskForm):
         pass
 # *********** Drugs **************
 
+
 class AddDrugForm(FlaskForm):
     eldrly = SelectField('Eldrly user', coerce=str, validators=[DataRequired()])
     name = StringField('Drug Name',validators=[DataRequired()])
+    fdawarnning = BooleanField('Run FDA Aprroval Test',default=False)
     type = SelectField('Drug Type',validators=[DataRequired()],choices=[('pill', 'Pills'), ('drop', 'Drops'), ('liquid', 'Liquid (ml)')])
     dose = IntegerField('Dose (for Drops or Liquid - ml)',validators=[DataRequired()])
     timesaday = IntegerField('How many times a day?',validators=[DataRequired()])
@@ -120,12 +122,17 @@ class AddDrugForm(FlaskForm):
     packsize = IntegerField('Pack Size?',validators=[DataRequired()])
     submit = SubmitField('Add Drug')
 
-    def validate_name (self,name):
-        current_drug = DrugAPI(name.data)
-        durg_info = current_drug.check_fda_approval(current_drug.drug_name)
-        if durg_info == None:
-            raise ValidationError('Drug not found in FDA Data Base')
 
+    def validate(self,extra_validators=None):
+        rv = FlaskForm.validate(self)
+        if not rv:
+            return False
+        current_drug = DrugAPI(self.name.data)
+        durg_info = current_drug.check_fda_approval(current_drug.drug_name)
+        if durg_info == None and self.fdawarnning.data:
+            self.name.errors.append(ValidationError('Drug not found in FDA Data Base'),)
+            return False
+        return True
 
 
 class AddActivityForm(FlaskForm):

@@ -86,16 +86,19 @@ def add_drug():
     form = AddDrugForm()
     form.eldrly.choices = eldelys_list
     if form.validate_on_submit():
-        #create new class for drugAPI using the form.name.data
-        #call function that warning as text
-        #add the text to the drug in line 87
+        warnings = ""
         current_drug = DrugAPI(form.name.data)
-        jason  = current_drug.check_fda_approval(current_drug.drug_name)
+        durg_info = current_drug.check_fda_approval(current_drug.drug_name)
+        if durg_info == None:
+            flash('Drug not found in FDA Data Base', 'warning')
+        else:
+            if 'warnings' in durg_info['results'][0].keys():
+                warnings_list = durg_info['results'][0]['warnings']
+            else:
+                warnings_list = durg_info['results'][0]['warnings_and_cautions']
+            warnings = '\n'.join(warnings_list)
 
 
-        warnings_list = jason['results'][0]['warnings']
-
-        warnings = '\n'.join(warnings_list)
 
         drug = Drug(name=form.name.data,type=form.type.data,dose=form.dose.data,timesaday=form.timesaday.data,daystotake=form.daystotake.data,user_id=current_user.id,startdate=form.startdate.data,packsize=form.packsize.data,gap=form.gap.data,taketime=form.taketime.data,elderly_user_id=form.eldrly.data,warnings=warnings,finish=False)
         db.session.add(drug)
