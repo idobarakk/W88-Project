@@ -22,8 +22,8 @@ import pytz
 @app.route("/home")
 @login_required
 def home():
-    notifications = Notification.query.filter_by(user_id=current_user.id).order_by(Notification.date.asc()).order_by(Notification.time.asc()).limit(3)
-    drugs = Drug.query.filter_by(user_id=current_user.id)
+    notifications = Notification.query.filter_by(user_id=current_user.id).order_by(Notification.date.asc()).order_by(Notification.time.asc())
+    drugs = Drug.query.filter_by(user_id=current_user.id).order_by(Drug.startdate.asc())
     eldelys = Elderlyuser.query.filter_by(user_id=current_user.id)
     eldelys_dict = {i.id: i.username for i in eldelys}
     return render_template("home.html",notifications=notifications ,drugs=drugs,eldelys_dict=eldelys_dict)
@@ -34,7 +34,7 @@ def home():
 @login_required
 def drugs():
     if current_user.is_authenticated:
-        drugs = Drug.query.filter_by(user_id=current_user.id)
+        drugs = Drug.query.filter_by(user_id=current_user.id).order_by(Drug.startdate.asc())
         drug_schedule = DrugSchedule.query.filter_by(user_id=current_user.id)
         eldelys = Elderlyuser.query.filter_by(user_id=current_user.id)
         eldelys_dict = {i.id: i.username for i in eldelys}

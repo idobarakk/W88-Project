@@ -12,6 +12,7 @@ import atexit
 
 #Create our TakeCare App
 app = Flask(__name__)
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
 #configure rnadom secret key and db location
 app.config['SECRET_KEY'] = '47db71e739639f70b97f57093694bbec'
