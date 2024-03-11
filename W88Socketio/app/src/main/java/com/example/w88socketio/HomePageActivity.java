@@ -4,15 +4,19 @@ import static com.example.w88socketio.GlobalData.userId;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import io.socket.client.Socket;
+
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Button;
 import io.socket.client.IO;
@@ -29,6 +33,7 @@ public class HomePageActivity extends AppCompatActivity {
     private TextView drugsTextView;
     private Button drugsButton;
     private Button activityButton1, activityButton2, activityButton3;
+    private FrameLayout notificationFrameLayout, drugsFrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +62,20 @@ public class HomePageActivity extends AppCompatActivity {
     private void initializeUI() {
         notificationTextView = findViewById(R.id.notificationTextView);
         notificationButton =findViewById(R.id.notificationButton);
-
+        notificationTextView.setVisibility(View.VISIBLE);
+        notificationTextView.setText(Html.fromHtml("<h1>"+ "There is no notifications :)" +"</H1>"));
 
         drugsTextView = findViewById(R.id.drugsTextView);
         drugsButton =findViewById(R.id.drugsButton);
-
+        drugsTextView.setVisibility(View.VISIBLE);
+        drugsTextView.setText(Html.fromHtml("<h1>"+ "There is no durg alerts:)" +"</H1>"));
 
         activityButton1 = findViewById(R.id.activityButton1);
         activityButton2 = findViewById(R.id.activityButton2);
         activityButton3 = findViewById(R.id.activityButton3);
+
+        notificationFrameLayout = findViewById(R.id.notificationFrameLayout);
+        drugsFrameLayout = findViewById(R.id.drugsFrameLayout);
     }
 
     private void setupSocket() {
@@ -148,10 +158,13 @@ public class HomePageActivity extends AppCompatActivity {
         String user_id = data.optString("user_id");
         String elderly_user_id = data.optString("elderly_user_id");
         boolean took = data.optBoolean("took");
-        notificationTextView.setText("Title: "+ title +"\n"+"Content: "+ content +"\n"+"Date and Time : "+ date + " " + time);
+
+        notificationTextView.setText(Html.fromHtml("<p style=\"text-align: center;\">"+"<strong>"+"You got a new Notification!"+"</strong>"+"</p>"+"<p>"+"<strong>"+"<h3>"+ title +"</h3>"+"</strong>"+"</p>"+"<p>"+ content +"</p>"+"<p>"+"Date: "+date+"</p>"+"<p>"+"Time: "+time+"</p>"));
+        //notificationTextView.setText("Title: "+ title +"\n"+"Content: "+ content +"\n"+"Date and Time : "+ date + " " + time);
         notificationButton.setEnabled(true);
         notificationTextView.setVisibility(View.VISIBLE);
         notificationButton.setVisibility(View.VISIBLE);
+        notificationFrameLayout.setBackgroundColor(Color.parseColor("#F7CFD3"));
         ringtone();
 
         notificationButton.setOnClickListener(v -> {
@@ -172,8 +185,10 @@ public class HomePageActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             mSocket.emit("message", notificationData.toString());
-            notificationTextView.setVisibility(View.INVISIBLE);
+            notificationTextView.setVisibility(View.VISIBLE);
+            notificationTextView.setText(Html.fromHtml("<h1>"+ "There is no notifications :)" +"</H1>"));
             notificationButton.setVisibility(View.INVISIBLE);
+            notificationFrameLayout.setBackgroundColor(Color.parseColor("#F5EEFF"));
         });
     }
 
@@ -189,10 +204,11 @@ public class HomePageActivity extends AppCompatActivity {
         String drug_name = data.optString("drug_name");
         boolean took = data.optBoolean("took");
 
-        drugsTextView.setText("Drug Name: "+ drug_name +"\n"+"Dose: "+ dose +"\n"+"Type : "+ type + "Date and Time: " + taketime +"   "+takedate);
+        drugsTextView.setText(Html.fromHtml("<p style=\"text-align: center;\">"+"<strong>"+"You got a new Drug remider!"+"</strong>"+"</p>"+"<h3>"+"<strong>"+drug_name+"</strong>"+"</h3>"+"<p>"+"Type: "+type+"</p>"+"<div>"+"Dose: "+dose+"</div>"+"<div>"+"</div>"+"<div>"+"Take Time: "+taketime+"</div>"));
         drugsButton.setEnabled(true);
         drugsTextView.setVisibility(View.VISIBLE);
         drugsButton.setVisibility(View.VISIBLE);
+        drugsFrameLayout.setBackgroundColor(Color.parseColor("#F7CFD3"));
         ringtone();
 
         drugsButton.setOnClickListener(v -> {
@@ -212,8 +228,10 @@ public class HomePageActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             mSocket.emit("message", drugData.toString());
-            drugsTextView.setVisibility(View.INVISIBLE);
+            drugsTextView.setVisibility(View.VISIBLE);
+            drugsTextView.setText(Html.fromHtml("<h1>"+ "There is no durg alerts:)" +"</H1>"));
             drugsButton.setVisibility(View.INVISIBLE);
+            drugsFrameLayout.setBackgroundColor(Color.parseColor("#F5EEFF"));
         });
     }
 

@@ -39,10 +39,10 @@
                         <span class="badge badge-pill badge-info">Active</span>
                         <div class="article-title">
 
-                            <big>{{ eldelys_dict[drug.elderly_user_id] }}</big>
+                            <big><strong>User: </strong> {{ eldelys_dict[drug.elderly_user_id] }}</big>
                         </div>
                         <div class="article-metadata">
-                            <big class="text-muted">{{ drug.startdate.strftime('%Y-%m-%d') }} </big>
+                            <big class="text-muted"><strong>Start Date: </strong> {{ drug.startdate.strftime('%d-%m-%y') }} </big>
 
                         </div>
                         <h2>{{ drug.name }}</h2>
@@ -145,10 +145,10 @@
                     <div class="media-body">
                         <span class="badge badge-pill badge-success">Done</span>
                         <div class="article-title">
-                            <big>{{ eldelys_dict[drug.elderly_user_id] }}</big>
+                            <big><strong>User: </strong> {{ eldelys_dict[drug.elderly_user_id] }}  </big>
                         </div>
                         <div class="article-metadata">
-                            <big class="text-muted">{{ drug.startdate.strftime('%Y-%m-%d') }} </big>
+                            <big class="text-muted"><strong>Start Date: </strong>  {{ drug.startdate.strftime('%d-%m-%y') }} </big>
                         </div>
                         <h2>{{ drug.name }}</h2>
                         {% if drug.warnings != "" %}

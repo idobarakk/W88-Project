@@ -1,27 +1,33 @@
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="8"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:weightSum="8">
 
     <!-- Notifications Section -->
     <FrameLayout
+        android:id="@+id/notificationFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:background="@drawable/layout_border">
+        android:background="@color/material_dynamic_tertiary95"
+        android:baselineAligned="false">
 
         <TextView
             android:id="@+id/notificationTextViewTitle"
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:background="#919EE4"
+            android:background="#A8A5C87D"
+            android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="Notifications" />
+            android:text="Notifications"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:typeface="normal" />
 
 
         <TextView
@@ -35,28 +41,34 @@
             android:id="@+id/notificationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I did it!"
             android:layout_gravity="center_horizontal|bottom"
-            android:visibility="invisible"
-            android:background="#E06969"/>
+            android:background="#E06969"
+            android:text="I did it!"
+            android:visibility="invisible" />
     </FrameLayout>
 
     <!-- Drugs Reminder Section -->
 
     <!-- Activities Section -->
     <FrameLayout
+        android:id="@+id/drugsFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:background="@drawable/layout_border">
+        android:background="@color/material_dynamic_tertiary95">
 
         <TextView
             android:id="@+id/drugsTextViewTitle"
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:background="#EDAEF8"
+            android:background="#B7EDAEF8"
+            android:fontFamily="sans-serif"
             android:gravity="center"
-            android:text="Drugs Alerts" />
+            android:text="Drugs Alerts"
+            android:textAlignment="center"
+            android:textColor="#4A4545"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/drugsTextView"
@@ -81,27 +93,30 @@
         android:layout_height="0dp"
         android:layout_weight="1.8"
         android:orientation="vertical">
+
         <Button
             android:id="@+id/activityButton1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Activity 1"
-            android:enabled="false" />
+            android:enabled="false"
+            android:text="Memory" />
+
         <Button
             android:id="@+id/activityButton2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Activity 2"
-            android:enabled="false" />
+            android:enabled="false"
+            android:text="Bulk game" />
+
         <Button
             android:id="@+id/activityButton3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Activity 3"
-            android:enabled="false" />
+            android:enabled="false"
+            android:text="Quiz" />
     </LinearLayout>
 
 </LinearLayout>

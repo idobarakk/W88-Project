@@ -16,10 +16,10 @@
             <div class="media-body">
                 <span class="badge badge-pill badge-info">Active</span>
                 <div class="article-title">
-                    <big>{{ eldelys_dict[notification.elderly_user_id] }}</big>
+                    <big><strong>User: </strong> {{ eldelys_dict[notification.elderly_user_id] }}</big>
                 </div>
               <div class="article-metadata">
-                <big class="text-muted"> {{ notification.date.strftime('%Y-%m-%d') }}    {{ notification.time }}    status:{{notification.took}} </big>
+                <big class="text-muted"><strong>Date: </strong> {{ notification.date.strftime('%d-%m-%y') }}   <strong>Time: </strong> {{ notification.time }} </big>
               </div>
               <h2>{{ notification.title }}</h2>
               <p class="article-content">{{ notification.content }}</p>
@@ -69,10 +69,10 @@
             <div class="media-body">
                 <span class="badge badge-pill badge-success">Done</span>
                 <div class="article-title">
-                    <big>{{ eldelys_dict[notification.elderly_user_id] }}</big>
+                    <big><strong>User: </strong> {{ eldelys_dict[notification.elderly_user_id] }}</big>
                 </div>
               <div class="article-metadata">
-                <big class="text-muted"> {{ notification.date.strftime('%Y-%m-%d') }}    {{ notification.time }}    status:{{notification.took}} </big>
+                <big class="text-muted"><strong>Date: </strong> {{ notification.date.strftime('%d-%m-%y') }}   <strong>Time: </strong> {{ notification.time }} </big>
               </div>
               <h2>{{ notification.title }}</h2>
               <p class="article-content">{{ notification.content }}</p>

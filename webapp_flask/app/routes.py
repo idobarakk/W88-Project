@@ -93,10 +93,10 @@ def add_drug():
             flash('Drug not found in FDA Data Base', 'warning')
         else:
             if 'warnings' in durg_info['results'][0].keys():
-                warnings_list = durg_info['results'][0]['warnings']
+                warning = durg_info['results'][0]['warnings']
             else:
-                warnings_list = durg_info['results'][0]['warnings_and_cautions']
-            warnings = '\n'.join(warnings_list)
+                warning = durg_info['results'][0]['warnings_and_cautions']
+            warnings = '\n'.join(warning)
 
 
 
@@ -162,8 +162,6 @@ def edit_notification(notification_id):
 @login_required
 def delete_notification(notification_id):
     notification = Notification.query.get_or_404(notification_id)
-    print(notification)
-    print(notification_id)
     db.session.delete(notification)
     db.session.commit()
     flash('Your notification has been deleted!', 'success')
@@ -464,12 +462,12 @@ def socket_login(data_dict):
         if bcrypt.check_password_hash(user.password, user_password):
             login_user(user)
             socketio.emit('message', {'type': 'login_callback','data':{'user_id':str(user.id),'validpass':True,'validuser':True}})
-            check_activity()
         else:
             socketio.emit('message', {'type': 'login_callback','data':{'user_id':None,'validpass':False,'validuser':True}})
     else:
         socketio.emit('message', {'type': 'login_callback','data':{'user_id':None,'validpass':True,'validuser':False}})
 
+    check_activity()
     #socketio.emit('message',login_response)
     return user.id
 
@@ -556,8 +554,8 @@ def check_activity():
                     }
                 socketio.emit('message',json)
 
-scheduler.add_job(func=check_notifications, trigger="interval", seconds=15)
-scheduler.add_job(func=check_drugs, trigger="interval", seconds=15)
+scheduler.add_job(func=check_notifications, trigger="interval", seconds=11)
+scheduler.add_job(func=check_drugs, trigger="interval", seconds=9)
 scheduler.add_job(func=check_activity, trigger="interval", seconds=5)
 scheduler.start()
 

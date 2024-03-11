@@ -34,7 +34,8 @@ scheduler = BackgroundScheduler()
 from app import models
 from app import drugapi
 
-#to see the relationship - need create view
+#Set and init Admin Views
+
 class NotificationView(ModelView):
     column_display_pk = True 
     column_hide_backrefs = False
