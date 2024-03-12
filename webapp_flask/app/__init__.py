@@ -27,7 +27,7 @@ login_manager.login_view = 'login'
 login_manager.login_message_category ='info'
 
 #,  message_queue='redis://localhost:6379'  add when ruuning on server
-socketio = SocketIO(app,logger=True, engineio_logger=True)
+socketio = SocketIO(app,message_queue='redis://localhost:6379',logger=True, engineio_logger=True)
 scheduler = BackgroundScheduler()
 
 
