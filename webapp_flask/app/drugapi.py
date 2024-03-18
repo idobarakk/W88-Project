@@ -1,12 +1,15 @@
 import requests
 import os
 
+
+
+# Implemention of FDA Data-base API Class
 class DrugAPI:
     
     def __init__(self,drug_name):
         self.drug_name = drug_name
 
-
+#check If the Drug in the FDA DB
     def check_fda_approval(self,drug_name):
         base_url = 'https://api.fda.gov/drug/'
         endpoint = 'label.json'
@@ -31,7 +34,7 @@ class DrugAPI:
             else:
                 return "Drug not found in FDA database."
 
-           
+# conver results to HTML - used for debugging-
     def convert_to_html(self, data, drug_name):
         # Check if data is a string (indicating an error or not found message)
         if isinstance(data, str):

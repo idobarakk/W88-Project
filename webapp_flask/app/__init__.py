@@ -10,15 +10,17 @@ from datetime import timedelta,datetime,time
 import pytz
 import atexit
 
-#Create our TakeCare App
+
+#Create Flask App
+
 app = Flask(__name__)
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
-#configure rnadom secret key and db location
+#Configure ranadom secret key and db location
 app.config['SECRET_KEY'] = '47db71e739639f70b97f57093694bbec'
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///site.db'
 
-#create Databse related to the app
+#Add DB, Crypt lib, and andmin configuration to the application
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 admin = Admin(app)
@@ -26,7 +28,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category ='info'
 
-#,  message_queue='redis://localhost:6379'  add when ruuning on server
+#Configure SocketIO and Schedualer
 socketio = SocketIO(app,message_queue='redis://localhost:6379',logger=True, engineio_logger=True)
 scheduler = BackgroundScheduler()
 
@@ -34,8 +36,8 @@ scheduler = BackgroundScheduler()
 from app import models
 from app import drugapi
 
-#Set and init Admin Views
 
+#Set and init Admin Views
 class NotificationView(ModelView):
     column_display_pk = True 
     column_hide_backrefs = False
@@ -75,7 +77,8 @@ admin.add_view(DrugView(models.Drug, db.session))
 admin.add_view(DrugScheduleView(models.DrugSchedule, db.session))
 admin.add_view(ActivitiesView(models.Activities, db.session))
 
-## one time creation
+
+## DB one time creation id not exist and create tables if missing
 with app.app_context() as ctx:
     ctx.push()
     db.create_all()

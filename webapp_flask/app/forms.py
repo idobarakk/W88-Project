@@ -8,6 +8,7 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from app.models import User, Elderlyuser
 from app.drugapi import DrugAPI
 
+#this files contains the starchcure of the forms in the project
 
 # *********** Login \ Register **************
 
@@ -134,6 +135,7 @@ class AddDrugForm(FlaskForm):
             return False
         return True
 
+# *********** Activites **************
 
 class AddActivityForm(FlaskForm):
     eldrly = SelectField('Eldrly user', coerce=str)
